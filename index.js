@@ -1,1 +1,1 @@
-module.exports = require('lib/chatwork');
+module.exports = require('./lib/chatwork');

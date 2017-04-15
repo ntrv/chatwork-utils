@@ -1,5 +1,5 @@
 export default class chatwork {
-  constructor(apikey){
+  constructor(apikey) {
     this.apikey = apikey;
   }
 }

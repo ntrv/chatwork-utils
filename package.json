@@ -1,0 +1,31 @@
+{
+  "name": "chatwork-utils",
+  "version": "0.0.1",
+  "description": "A chatwork API utils",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Nate-River56/chatwork-utils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Nate-River56/chatwork-utils/issues"
+  },
+  "engine": {
+    "node": ">=4.3"
+  },
+  "keywords": [
+    "chatwork"
+  ],
+  "author": {
+    "name": "Nate-River56",
+    "email": "hydrangea56@me.com",
+    "url": "https://github.com/Nate-River56"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/Nate-River56/hub2chat#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.24.1"
+  }
+}

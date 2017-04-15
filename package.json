@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "A chatwork API utils",
   "main": "index.js",
+  "scripts": {
+    "babel": "./node_modules/.bin/babel src -d lib"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/Nate-River56/chatwork-utils.git"

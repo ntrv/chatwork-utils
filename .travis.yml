@@ -1,9 +1,9 @@
 language: node_js
 node_js:
   - "7"
-  - "4"
 before_script:
   - npm install
+  - npm run babel
 script:
   - npm run lint
   - npm test

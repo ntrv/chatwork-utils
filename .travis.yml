@@ -7,3 +7,11 @@ before_script:
 script:
   - npm run lint
   - npm test
+deploy:
+  provider: npm
+  email: hydrangea56@me.com
+  api_key:
+    secure: KgRzsLYmXxU5i/f/KEOo9B9cYXQ0C7mRGyGklfwX6Xn3QVOOu8sYc8QdtA8OIqbtlBFOAv+U7ZYQSGO+e3TMSfiEUQpwomx00fzphxI9gDX4eG0xVZW49eW/URhWAO1bW6Yc237TA0s7Yw6hBArhOanGDQu9kgS0Cctj++LxQMObp/Syxi8qoEHSRIBuH60UAIjDbayW6suYTRELDmGIsRVi9Brta+wdh6wTK7FeJZDJgHQZdmq0sB3bsI91UjEireG3JITa9avsD3LDSggj9wn2R8dhjWPPprHMAVBBNjIQmiTQEkkLu+89DcAynuUv2y0+nK9vqONPJE4ofTNVxkmBjZvmIaQN2IWQ2vwF2CdYjTkVb5c4m+bPK1GnM5FeYwyjpaGlijFzSFy2xiqKwa4qSa0QI7HU81x6t+4f58SgPwzJwG5M53dp+3F02If1dl8uyX9uGHzzwzgSRihZglTxUG2Os+EOkAC5oQYqtpdA8i27FkhByiNcBnMuQBefUPqC+8/gvgkMnFaOVjAlNmUFPTkllxyIoEJM1Im2+OxPPVpFIWJllXbp0sQy4j9zncB+1N+t1xLs1+4w9x9tlRdeBp9C6+g/pl9BRppIHw7TCQr+8rjDqE5dQX+9kzwvkdActITBCm1Tq1rPR62KcX+sIOuNIPWQreFW5K8diLc=
+  skip_cleanup: true
+  on:
+    branch: master

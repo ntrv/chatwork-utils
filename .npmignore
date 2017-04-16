@@ -1,0 +1,7 @@
+# lib/
+src
+test
+.babelrc
+.eslintignore
+.eslintrc.yml
+mocha.opts

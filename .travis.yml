@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "7"
+  - '7'
 before_script:
   - npm install
   - npm run babel
@@ -11,7 +11,7 @@ deploy:
   provider: npm
   email: hydrangea56@me.com
   api_key:
-    secure: OfT4xVjsWQfCf+oFQdssqBAoCIeyWgWz81epWINU/GRygRlfFs4YmY8eYnEcrsbfvuVPYn/sQFrz4EJyCUfbR3MOl2Dk6MSnR5awt+SiyvYANCJwMVYJROzfxTe/VL8SrY/vuYUXbc7kICqFka2Ip0PQTAIEVcZsEbdHTMqWtNWebZSiC/zj1KXMn4kL0Af+siTTBtzSbhGkvFy5qJ2GxChEUs/AdE/E43C70o5CtwcWKk0zcGN3tp1uddCd+u5BJHbqxNMEQygNTAe/vPZh2/1VV5I+Pe3D/oWQYA7Os0WC/a1wi16JCn3EGFI0kmWVsv5gRC13CzI15XNI7y0JP1oLVrtVtyefacOqj6ztdtzsJJuITOhIphEtTG5rag/PMSbie+hGApo5Fps+HkOYoB0lSlLXW9H6ndZTPdTsLM7oiQ1MT3maVyE0na/t7np2SCAodp693zmL5GUdcerpT6dKluQa6P/IaWWauzBKypxRLSpqMtsa2K8un9kLrQngx6KlRDoPA2kEcKTYzgy5GqS68twHznR9ta+YL0JUqwH/Lt7dukIsFsQ04vfp6Vx9tjy2Jns7UCtgwhQfV5jF+o8LQpgVigRIrHI0O5ekesAN8ESnNh3b7c9gP76KdBqtMdbfzSB2NfmVgAbByUFYueF9wGY599zZClMBK9kmjAc=
+    secure: P1KTOdr7c1t6lqrPTaUATy71SqC/UQcsgX5uGn5/7L6H73tFt3L1rUq0yct54AbRj/ObZ2MdgUahu+gEmB5pwUDtVHPsPuzEybaqxM4be1/ZAU8ZJkwxwEpgDwaO/O7VdS9GIE95HTLUw+ICF2rnmRy3KxUNq0Ts1HiPpIT4zznYxdDMfA4rLMM7ZEV2COkljnl+/W61F3pMA2mMPqrfteIE8/7KRvq+hjoeezw+rvDnwGKAGwKzOJqdNLQD4zKB+unTdWDX8k2fenRWKBSEbBud1EU2xTuWLcqeqQdgv5QYDCilK1BVUI0ShByJ0UWvmqHvFRyahMxiVF+6cx4KF3XxIlPVQnwyM0sOwx6+WyqboOcfx1d3myoTGi3URVbzss5D3olZjdmv3TT34HVj2HdNERO9mZ8qU9TOCAipUFouFFUV8xqfKKHABs5ifbo5LQ2b9OcK02O2e4wQTWqLRA4LLbVyuXHneJT7/JXO8KgO6n1KAu6s9Ori+VefKCQTbxMeX/SYq6VCj0Xy8ZmUvDaVKo7M0dHTwg9bI8i1w0oHGjNSFVzS+eYwcig/bY2Zyb9r0jnr46XpW+jHsRi+P+w4sVoqESxWPbSNddkxOgPr2Fr3VDpWwItAQ7F0IhBu7iZer7hPtJrzvf5imc/hm4wp90yQPApMs9P8u24ANFs=
   skip_cleanup: true
   on:
     branch: master

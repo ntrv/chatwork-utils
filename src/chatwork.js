@@ -9,4 +9,14 @@ export default class chatwork extends baseChatwork {
   myStatus() {
     return this.instance.get('/my/status');
   }
+
+  myTasks(assignedByAccountId, status) {
+    return this.instance.get('/my/tasks', {
+      params: {
+        assigned_by_account_id: assignedByAccountId,
+        status,
+      },
+    });
+  }
+
 }

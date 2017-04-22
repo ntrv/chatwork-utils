@@ -35,7 +35,9 @@ describe('GET系APIのテスト', () => {
 
     return cw.me()
     .then(res => {
-      assert(res.data === mockRes);
+      assert(
+        JSON.stringify(res.data) === JSON.stringify(mockRes),
+      );
     })
     .catch(err => {
       chai.fail(0, 1, err.message);
@@ -59,7 +61,58 @@ describe('GET系APIのテスト', () => {
 
     return cw.myStatus()
     .then(res => {
-      assert(res.data === mockRes);
+      assert(
+        JSON.stringify(res.data) === JSON.stringify(mockRes),
+      );
+    })
+    .catch(err => {
+      chai.fail(0, 1, err.message);
+    });
+  });
+
+  it('/my/tasksのテスト', () => {
+    const cw = new Chatwork('apiKey');
+    const mock = new MockAdapter(cw.instance);
+
+    const mockRes = config => [200,
+      [
+        {
+          task_id: 3,
+          room: {
+            room_id: 5,
+            name: 'Group Chat Name',
+            icon_path: 'https://example.com/ico_group.png',
+          },
+          assigned_by_account: {
+            account_id: config.params.assigned_by_account_id,
+            name: 'Anna',
+            avatar_image_url: 'https://example.com/def.png',
+          },
+          message_id: '13',
+          body: 'buy milk',
+          limit_time: 1384354799,
+          status: config.params.status,
+        },
+      ],
+    ];
+
+    mock.onGet('/my/tasks').reply(mockRes);
+
+    const config = {
+      params: {
+        assigned_by_account_id: 456,
+        status: 'open',
+      },
+    };
+
+    return cw.myTasks(
+      config.params.assigned_by_account_id,
+      config.params.status,
+    )
+    .then(res => {
+      assert(
+        JSON.stringify(res.data) === JSON.stringify(mockRes(config)[1]),
+      );
     })
     .catch(err => {
       chai.fail(0, 1, err.message);

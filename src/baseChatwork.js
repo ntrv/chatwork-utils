@@ -1,28 +1,16 @@
-import _ from 'lodash';
+import axios from 'axios';
 
 export default class baseChatwork {
   constructor(apikey) {
-    this.apikey = apikey;
-  }
-
-  static url(endpoint) {
-    return `https://api.chatwork.com/v2${endpoint}`;
-  }
-
-  option(endpoint, method, params = {}) {
-    const options = {
-      url: this.constructor.url(endpoint),
-      method,
+    this.instance = axios.create({
+      baseURL: 'https://api.chatwork.com/v2',
+      timeout: 1000,
       headers: {
-        'X-ChatWorkToken': this.apikey,
+        'X-ChatWorkToken': apikey,
       },
-      json: true,
-    };
-
-    if (!_.isEmpty(params)) {
-      options.form = params;
-    }
-    return options;
+      validateStatus: status => status >= 200 && status < 300,
+      responseType: 'json',
+    });
   }
 
 }

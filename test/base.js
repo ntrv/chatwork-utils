@@ -9,12 +9,4 @@ describe('Chatworkの基本的テスト', () => {
     const cw = new Chatwork('hoge');
     assert.isTrue(_.isObject(cw.instance));
   });
-  it('APIKeyがインスタンスに含まれているかどうか', () => {
-    const apiKey = 'hoge';
-    const cw = new Chatwork(apiKey);
-    assert.equal(
-      cw.instance.defaults.headers['X-ChatWorkToken'],
-      apiKey,
-    );
-  });
 });

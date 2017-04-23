@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run babel && cross-env NODE_ENV=test nyc mocha",
-    "babel": "./node_modules/.bin/babel src -d lib",
-    "lint": "./node_modules/.bin/eslint .",
-    "fix": "./node_modules/.bin/eslint . --fix",
+    "babel": "babel src -d lib",
+    "lint": "eslint .",
+    "fix": "eslint . --fix",
     "clean": "rm -rf lib"
   },
   "repository": {

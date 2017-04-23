@@ -25,7 +25,7 @@ describe('/contactsのテスト', () => {
 
     mock.onGet('/contacts').reply(200, mockRes);
 
-    return cw.contacts().then(res => {
+    return cw.listMyContacts().then(res => {
       assert(
         JSON.stringify(res.data) === JSON.stringify(mockRes),
       );

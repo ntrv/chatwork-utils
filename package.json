@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run babel && cross-env NODE_ENV=test nyc mocha",
+    "simple-test": "npm run babel && mocha",
     "cover": "nyc report --reporter=text-lcov > coverage.lcov && codecov | grep -v token",
     "babel": "babel src -d lib",
     "lint": "eslint .",

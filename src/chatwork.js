@@ -6,11 +6,11 @@ export default class chatwork extends baseChatwork {
     return this.instance.get('/me');
   }
 
-  myStatus() {
+  getMyStatus() {
     return this.instance.get('/my/status');
   }
 
-  myTasks(assignedByAccountId, status) {
+  listMyTasks(assignedByAccountId, status) {
     return this.instance.get('/my/tasks', {
       params: {
         assigned_by_account_id: assignedByAccountId,
@@ -19,7 +19,7 @@ export default class chatwork extends baseChatwork {
     });
   }
 
-  contacts() {
+  listMyContacts() {
     return this.instance.get('/contacts');
   }
 

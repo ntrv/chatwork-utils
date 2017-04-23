@@ -21,7 +21,7 @@ describe('/myのテスト', () => {
 
     mock.onGet('/my/status').reply(200, mockRes);
 
-    return cw.myStatus()
+    return cw.getMyStatus()
     .then(res => {
       assert(
         JSON.stringify(res.data) === JSON.stringify(mockRes),
@@ -67,7 +67,7 @@ describe('/myのテスト', () => {
       },
     };
 
-    return cw.myTasks(
+    return cw.listMyTasks(
       config.params.assigned_by_account_id,
       config.params.status,
     )

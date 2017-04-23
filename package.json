@@ -1,15 +1,17 @@
 {
   "name": "chatwork-utils",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "A chatwork API utils",
   "main": "index.js",
   "scripts": {
     "test": "npm run babel && cross-env NODE_ENV=test nyc mocha",
+    "simple-test": "npm run babel && mocha",
     "cover": "nyc report --reporter=text-lcov > coverage.lcov && codecov | grep -v token",
     "babel": "babel src -d lib",
     "lint": "eslint .",
     "fix": "eslint . --fix",
-    "clean": "rm -rf lib coverage.lcov"
+    "clean": "rm -rf lib coverage.lcov",
+    "clean-all": "npm clean && rm -rf node_modules"
   },
   "repository": {
     "type": "git",

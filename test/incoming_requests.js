@@ -6,7 +6,7 @@ import Chatwork from '../index';
 const chai = Chai.assert;
 
 describe('/incoming_requestsのテスト', () => {
-  it('GET /incoming_requestsのテスト', () => {
+  it('GET /incoming_requests', () => {
     const cw = new Chatwork('apiKey');
     const mock = new MockAdapter(cw.instance);
 

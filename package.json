@@ -9,7 +9,8 @@
     "babel": "babel src -d lib",
     "lint": "eslint .",
     "fix": "eslint . --fix",
-    "clean": "rm -rf lib coverage.lcov"
+    "clean": "rm -rf lib coverage.lcov",
+    "clean-all": "npm clean && rm -rf node_modules"
   },
   "repository": {
     "type": "git",

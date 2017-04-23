@@ -9,7 +9,7 @@
     "babel": "babel src -d lib",
     "lint": "eslint .",
     "fix": "eslint . --fix",
-    "clean": "rm -rf lib"
+    "clean": "rm -rf lib coverage.lcov"
   },
   "repository": {
     "type": "git",
@@ -67,7 +67,8 @@
       "babel-register"
     ],
     "exclude": [
-      "index.js"
+      "index.js",
+      "test/*"
     ],
     "sourceMap": false,
     "instrument": false

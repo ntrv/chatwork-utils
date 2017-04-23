@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run babel && cross-env NODE_ENV=test nyc mocha",
+    "cover": "nyc report --reporter=text-lcov > coverage.lcov && codecov -t ${CODECOV_TOKEN}",
     "babel": "babel src -d lib",
     "lint": "eslint .",
     "fix": "eslint . --fix",
@@ -38,6 +39,7 @@
     "babel-preset-power-assert": "^1.0.0",
     "babel-register": "^6.24.1",
     "chai": "^3.5.0",
+    "codecov": "^2.1.0",
     "cross-env": "^4.0.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.1.3",

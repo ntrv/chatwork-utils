@@ -4,9 +4,12 @@
     "es2015"
   ],
   "env": {
-    "development": {
+    "test": {
       "presets": [
-        "power-assert"
+        "power-assert",
+      ],
+      "plugins": [
+        "istanbul",
       ]
     } 
   }

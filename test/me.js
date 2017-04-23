@@ -5,8 +5,8 @@ import Chatwork from '../index';
 
 const chai = Chai.assert;
 
-describe('GET系APIのテスト', () => {
-  it('/meのテスト', () => {
+describe('/meのテスト', () => {
+  it('GET /meのテスト', () => {
     const cw = new Chatwork('apiKey');
     const mock = new MockAdapter(cw.instance);
 
@@ -35,31 +35,9 @@ describe('GET系APIのテスト', () => {
 
     return cw.me()
     .then(res => {
-      assert(res.data === mockRes);
-    })
-    .catch(err => {
-      chai.fail(0, 1, err.message);
-    });
-  });
-
-  it('/my/statusのテスト', () => {
-    const cw = new Chatwork('apiKey');
-    const mock = new MockAdapter(cw.instance);
-
-    const mockRes = {
-      unread_room_num: 2,
-      mention_room_num: 1,
-      mytask_room_num: 3,
-      unread_num: 12,
-      mention_num: 1,
-      mytask_num: 8,
-    };
-
-    mock.onGet('/my/status').reply(200, mockRes);
-
-    return cw.myStatus()
-    .then(res => {
-      assert(res.data === mockRes);
+      assert(
+        JSON.stringify(res.data) === JSON.stringify(mockRes),
+      );
     })
     .catch(err => {
       chai.fail(0, 1, err.message);

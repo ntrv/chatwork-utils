@@ -23,4 +23,8 @@ export default class chatwork extends baseChatwork {
     return this.instance.get('/contacts');
   }
 
+  incomingRequests() {
+    return this.instance.get('/incoming_requests');
+  }
+
 }

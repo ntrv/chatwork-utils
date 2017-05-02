@@ -48,9 +48,9 @@ export default class chatwork extends baseChatwork {
    * @return {Promise} Return response or error message.
    * @desc 自分のタスク一覧を取得する。(100件まで取得可能)
    * @param {number} assignedByAccountId - タスクの依頼者のアカウントID
-   * @param {string} status - タスクのステータス 'open' or 'done'
+   * @param {string} [status = 'open'] - タスクのステータス 'open' or 'done'
    */
-  listMyTasks(assignedByAccountId, status) {
+  listMyTasks(assignedByAccountId, status = 'open') {
     return this.instance.get('/my/tasks', {
       params: {
         assigned_by_account_id: assignedByAccountId,

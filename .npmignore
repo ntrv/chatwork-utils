@@ -1,6 +1,11 @@
 # lib/
 src
 test
+esdoc
+node_modules
+coverage
+codecov.yml
+esdoc.json
 .babelrc
 .eslintignore
 .eslintrc.yml

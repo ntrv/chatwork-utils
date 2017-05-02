@@ -1,6 +1,6 @@
 {
   "name": "chatwork-utils",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A chatwork API utils",
   "main": "index.js",
   "scripts": {

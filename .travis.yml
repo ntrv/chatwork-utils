@@ -35,3 +35,4 @@ env:
 branches:
   except:
     - gh-pages
+    - /^v[0-9]/

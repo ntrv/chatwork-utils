@@ -12,8 +12,9 @@ cache:
   directories:
     - node_modules
 after_success:
-    - npm run cover
-    - npm run esdoc
+  - npm run cover
+before_deploy:
+  - npm run esdoc
 deploy:
   - provider: npm
     email: hydrangea56@me.com

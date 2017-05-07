@@ -1,7 +1,11 @@
 init:
   - git config --global core.autocrlf false
   - ps: Update-NodeJsInstallation (Get-NodeJsLatestBuild $env:nodejs_version)
+environment:
+  matrix:
+    - nodejs_version: 7
 install:
+  - node -v
   - npm install
 before_test:
   - npm run babel

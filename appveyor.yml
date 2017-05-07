@@ -1,0 +1,13 @@
+init:
+  - git config --global core.autocrlf false
+before_install:
+  - ps: Update-NodeJsInstallation (Get-NodeJsLatestBuild $env:nodejs_version)
+install:
+  - npm install
+before_test:
+  - npm run babel
+test:
+  - npm run lint
+  - npm test
+build: off
+deploy: off

@@ -1,6 +1,7 @@
 chatwork-utils
 ===
 [![Build Status](https://travis-ci.org/Nate-River56/chatwork-utils.svg?branch=master)](https://travis-ci.org/Nate-River56/chatwork-utils)
+[![Build status](https://ci.appveyor.com/api/projects/status/b11cjdqn3ci0oktj/branch/master?svg=true)](https://ci.appveyor.com/project/Nate-River56/chatwork-utils/branch/master)
 [![npm](https://img.shields.io/npm/v/chatwork-utils.svg)](https://www.npmjs.com/package/chatwork-utils)
 [![npm](https://img.shields.io/npm/l/chatwork-utils.svg)](https://www.npmjs.com/package/chatwork-utils)
 [![npm](https://img.shields.io/npm/dm/chatwork-utils.svg)](https://www.npmjs.com/package/chatwork-utils)

@@ -4,6 +4,7 @@
     "es2015"
   ],
   "comments": false,
+  "minified": true,
   "env": {
     "test": {
       "presets": [

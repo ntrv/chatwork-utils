@@ -1,8 +1,9 @@
 language: node_js
 node_js:
   - '7'
-before_script:
+install:
   - npm install
+before_script:
   - npm run babel
 script:
   - npm run lint
@@ -11,8 +12,9 @@ cache:
   directories:
     - node_modules
 after_success:
-    - npm run cover
-    - npm run esdoc
+  - npm run cover
+before_deploy:
+  - npm run esdoc
 deploy:
   - provider: npm
     email: hydrangea56@me.com
@@ -27,8 +29,11 @@ deploy:
     target_branch: gh-pages
     on:
       branch: master
-    github_token:
-      secure: SyShY79z4c3m1eoKJVx/ZjxpMjk97k1yw4/NSSFPaDH/7/pCb8NKeHbiuHt7IpEsS/iHv03Q0Z92HuitZwirX9aOBoJa/mzMWbMUmCp1IE79IQCqnisVpssAK2If8HJxIRYYuPs5lhX3NhB42cvT2bGjmDhrY5+yUweQEjHJICpJszh/E9FEB3qcUOdatT4dQJd9gIIeRPxrsi1uE2A5V73JdITTz6E7Rh2KYCWhfEIZGY5822g+5v1lcqHP28ZSlTlrk50rJbhlBMQyWvkyn8Y5SKwBsFP3r71BujyEByialqeQzR7jNQrZBgsELmdTtaghfkWgg7srGzIpWXQKqtDycU6VkkPolERBZ1gPUzD6IWuF8d0sma8/wQk4yn8Md0BTbrevtqfR4N77elbuXKbPo5zOK7y5c5EaaZFBeq/mrRPCed6BTLGrf5hGGz76Xgr2bo/HyOzlbFdaTmcKHlvbYyJ1YZOVSg7EQF1gRTtjRFsaKOLEPyFrs3aHlG3E2lXvgR4P+DkHNvLg/SQb68SkuT0/grQCZBOsGSjaIqQSkl51+Ks84I44I7ZSHJ0qsMWRpfsQMhP0OZRxlTb8QYLjuGAAsQzihnvJhLFhO/LvD4bXEA82lz7NKuixLr/NVvwm2btUGczY7FdhmPz7vWIh0a/bbegI1J1r/MpEt9M=
+    github_token: ${GITHUB_TOKEN}
 env:
   global:
     secure: QpMlV1V8HLtKMg0b6ROXdoQ0Dvo16Exl2Zr7sEpWN5UqxlqSf/Bn2EMhNUCp4dT66xPyo2FZfviASTNH6wGU7aKgd4Gz/oSpMih+D76zcBfbi9yfzoTZyba4vrSJM5wv92s7JMesoR/HTpwHLa/nmGzn8uKOHAckbL6osJ5/Q1zaenQMA6lX3ysQiOQNIWkBgwC7y/dQxeY+Q3pyYjSZw4s8+cwvoOjJDk0serAONsKRx5PIJi83/Y9vr4kRvRV4H7ro4UY8oE+ysklUrDorAR7JY3bCNUSFim5SUEI6+lQO4H8gNnLRvOZ7TCgPHN60t0RnBfNbopLrLo97fGb1DZqyJGQV1qXixhJo8o9btoH4Y6eyuiipIAC1oiBET7myM8TFFse0Cwr1zOL7f5f02PiOZxje8r5Og580fcybQquUhXMcVv6zMRKDJhe0dMOpbYBnbRCt9a0qx8rMXGGTGjAWRjiATcj/zuvpAEUvnNEfa3BmAzb1YYvnOKxXtOKf8GcdPz37xKNdOHxD9313oHV1RHwhqOKJOGiPI3Nb8BZ4AgEBpbyK4le/2jxFSIm9iT7ciCI+/qN1Dv7QGjV8UceFYCD94uWXHqXz97HBp458wJAvTX1cDm+NeFySDPRJenDEiAWkyqmyBeC4L3w5PCy+iUjkQzDiblO8NdgmQfE=
+branches:
+  except:
+    - gh-pages
+    - /^v[0-9]/

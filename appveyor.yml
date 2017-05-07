@@ -12,5 +12,7 @@ before_test:
 test_script:
   - npm run lint
   - npm test
+cache:
+  - node_modules
 build: off
 deploy: off

@@ -10,3 +10,5 @@ esdoc.json
 .eslintignore
 .eslintrc.yml
 mocha.opts
+coverage.lcov
+appveyor.yml

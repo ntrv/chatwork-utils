@@ -27,7 +27,7 @@ describe('/incoming_requestsのテスト', () => {
 
       mock.onGet('/incoming_requests').reply(200, mockRes);
 
-      return cw.incomingRequests()
+      return cw.listIncomingRequests()
       .then(res => {
         assert(
           JSON.stringify(res.data) === JSON.stringify(mockRes),

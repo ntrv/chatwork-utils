@@ -2,7 +2,7 @@ import baseChatwork from './baseChatwork';
 
 /**
  * @access public
- * @desc For use Chatwork Services
+ * @desc For use Chatwork Readonly services
  */
 export default class chatworkRo extends baseChatwork {
 
@@ -71,7 +71,7 @@ export default class chatworkRo extends baseChatwork {
    * @return {Promise} Return response or error message.
    * @desc 自分に対するコンタクト承認依頼一覧を取得する(100件まで取得可能)
    */
-  incomingRequests() {
+  listIncomingRequests() {
     return this.instance.get('/incoming_requests');
   }
 

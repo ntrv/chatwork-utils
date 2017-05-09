@@ -10,7 +10,7 @@
     "babel": "babel src -d lib --source-maps",
     "lint": "eslint .",
     "fix": "eslint . --fix",
-    "clean": "rm -rf lib coverage.lcov",
+    "clean": "rm -rf lib coverage.lcov esdoc",
     "clean-all": "npm clean && rm -rf node_modules",
     "esdoc": "esdoc -c ./esdoc.json"
   },

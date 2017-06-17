@@ -26,7 +26,6 @@ describe('/roomsのテスト', () => {
         membersReadonlyIds: [],
       })
       .then(res => {
-        console.log(res);
         assert(
           JSON.stringify(res.data) ===
           JSON.stringify(mockRes),

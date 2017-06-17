@@ -7,4 +7,11 @@ engines:
       import/no-unresolved:
         enabled: false
     config:
+      extensions:
+        - .es6
+        - .js
       config: .eslintrc.yml
+  rating:
+    paths:
+      - "**.es6"
+      - "**.js"

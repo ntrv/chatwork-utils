@@ -49,6 +49,7 @@
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-config-mocha": "0.0.0",
     "eslint-config-standard": "^5.3.5",
+    "eslint-import-resolver-node": "^0.3.0",
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-mocha": "^4.10.1",
     "eslint-plugin-mocha-only": "0.0.3",

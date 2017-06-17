@@ -1,7 +1,6 @@
 import qs from 'qs';
 import _ from 'lodash';
 import chatworkRo from './chatworkRo';
-import Utils from './utils';
 
 /**
  * @access public
@@ -33,14 +32,6 @@ export default class chatwork extends chatworkRo {
    * @param {number} requestId - リクエストID
    */
   createChatroom(options) {
-    if (!Utils.isAllArrays([
-      options.membersAdminIds,
-      options.membersMemberIds,
-      options.membersReadonlyIds,
-    ])) {
-      return Promise.reject({ message: 'Fail' });
-    }
-
     return this.instance.post('/rooms',
       qs.stringify({
         description: options.description,

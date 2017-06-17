@@ -1,6 +1,6 @@
 {
   "name": "chatwork-utils",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A chatwork API utils",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "babel": "babel src -d lib --source-maps",
     "lint": "eslint .",
     "fix": "eslint . --fix",
-    "clean": "rm -rf lib coverage.lcov",
+    "clean": "rm -rf lib coverage.lcov esdoc",
     "clean-all": "npm clean && rm -rf node_modules",
     "esdoc": "esdoc -c ./esdoc.json"
   },
@@ -37,31 +37,33 @@
   "devDependencies": {
     "axios-mock-adapter": "^1.8.1",
     "babel-cli": "^6.24.1",
-    "babel-plugin-istanbul": "^4.1.1",
+    "babel-plugin-istanbul": "^4.1.4",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-power-assert": "^1.0.0",
     "babel-register": "^6.24.1",
     "chai": "^3.5.0",
-    "codecov": "^2.1.0",
+    "codecov": "^2.2.0",
     "cross-env": "^4.0.0",
     "esdoc": "^0.5.2",
     "eslint": "^3.19.0",
-    "eslint-config-airbnb-base": "^11.1.3",
+    "eslint-config-airbnb-base": "^11.2.0",
     "eslint-config-mocha": "0.0.0",
     "eslint-config-standard": "^5.3.5",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-mocha": "^4.9.0",
+    "eslint-import-resolver-node": "^0.3.0",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-mocha": "^4.10.1",
     "eslint-plugin-mocha-only": "0.0.3",
     "eslint-plugin-promise": "^1.3.2",
     "eslint-plugin-standard": "^1.3.3",
     "intelli-espower-loader": "^1.0.1",
-    "mocha": "^3.2.0",
+    "mocha": "^3.4.2",
     "nyc": "^10.2.0",
-    "power-assert": "^1.4.2"
+    "power-assert": "^1.4.4"
   },
   "dependencies": {
-    "axios": "^0.16.1",
-    "lodash": "^4.17.4"
+    "axios": "^0.16.2",
+    "lodash": "^4.17.4",
+    "qs": "^6.4.0"
   },
   "directories": {
     "test": "test/"

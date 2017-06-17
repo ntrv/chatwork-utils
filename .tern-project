@@ -1,0 +1,20 @@
+{
+  "libs": [
+    "ecmascript",
+    "chai",
+    "underscore"
+  ],
+  "plugins": {
+    "doc_comment": {},
+    "complete_strings": {},
+    "node": {},
+    "es_modules": {}
+  },
+  "loadEagerly": [
+    "src/*.js",
+    "test/*.js"
+  ],
+  "dontLoad": [
+    "index.js"
+  ]
+}

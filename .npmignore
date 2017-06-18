@@ -13,3 +13,4 @@ mocha.opts
 coverage.lcov
 appveyor.yml
 .codeclimate.yml
+.nyc_output/

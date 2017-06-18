@@ -12,3 +12,4 @@ esdoc.json
 mocha.opts
 coverage.lcov
 appveyor.yml
+.codeclimate.yml

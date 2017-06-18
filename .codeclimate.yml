@@ -1,0 +1,18 @@
+---
+engines:
+  eslint:
+    enabled: true
+    channel: eslint-3
+    checks:
+      import/no-unresolved:
+        enabled: false
+    config:
+      extensions:
+        - .es6
+        - .js
+      config: .eslintrc.yml
+  rating:
+    enabled: true
+    paths:
+      - "**.es6"
+      - "**.js"

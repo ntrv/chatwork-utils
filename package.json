@@ -1,6 +1,6 @@
 {
   "name": "chatwork-utils",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A chatwork API utils",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "babel": "babel src -d lib --source-maps",
     "lint": "eslint .",
     "fix": "eslint . --fix",
-    "clean": "rm -rf lib coverage.lcov",
+    "clean": "rm -rf lib coverage.lcov esdoc",
     "clean-all": "npm clean && rm -rf node_modules",
     "esdoc": "esdoc -c ./esdoc.json"
   },
@@ -49,6 +49,7 @@
     "eslint-config-airbnb-base": "^11.1.3",
     "eslint-config-mocha": "0.0.0",
     "eslint-config-standard": "^5.3.5",
+    "eslint-import-resolver-node": "^0.3.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-mocha": "^4.9.0",
     "eslint-plugin-mocha-only": "0.0.3",
@@ -61,7 +62,8 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "qs": "^6.4.0"
   },
   "directories": {
     "test": "test/"

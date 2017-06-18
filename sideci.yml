@@ -1,0 +1,8 @@
+---
+linter:
+  eslint:
+    options:
+      npm_install: false
+      config: '.eslintrc.yml'
+      ext: 'es6'
+      ignore-path: .gitignore

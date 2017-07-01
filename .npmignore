@@ -14,5 +14,10 @@ coverage.lcov
 appveyor.yml
 .codeclimate.yml
 .nyc_output/
-package-lock.json
 sideci.yml
+README.md
+LICENSE
+.gitignore
+.npmignore
+.tern-project
+.travis.yml

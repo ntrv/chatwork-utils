@@ -5,7 +5,6 @@ import baseChatwork from './baseChatwork';
  * @desc For use Chatwork Readonly services
  */
 export default class chatworkRo extends baseChatwork {
-
   /**
    * @return {Promise} Return response or error message.
    * @desc 自分自身の情報を取得
@@ -181,5 +180,4 @@ export default class chatworkRo extends baseChatwork {
       },
     });
   }
-
 }

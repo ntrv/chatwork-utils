@@ -9,7 +9,6 @@ import axios from 'axios';
  * @desc Base Chatwork class only constructor
  */
 export default class baseChatwork {
-
   /**
    * @desc Create Chatwork instance
    * @param {string} apikey - Chatwork API Token
@@ -35,5 +34,4 @@ export default class baseChatwork {
       responseType: 'json',
     });
   }
-
 }

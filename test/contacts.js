@@ -26,14 +26,14 @@ describe('/contactsのテスト', () => {
 
       mock.onGet('/contacts').reply(200, mockRes);
 
-      return cw.listMyContacts().then(res => {
+      return cw.listMyContacts().then((res) => {
         assert(
           JSON.stringify(res.data) === JSON.stringify(mockRes),
         );
       })
-      .catch(err => {
-        chai.fail(0, 1, err.message);
-      });
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
     });
   });
 });

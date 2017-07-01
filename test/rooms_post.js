@@ -25,15 +25,15 @@ describe('/roomsのテスト', () => {
         membersMemberIds: [123],
         membersReadonlyIds: [],
       })
-      .then(res => {
-        assert(
-          JSON.stringify(res.data) ===
+        .then((res) => {
+          assert(
+            JSON.stringify(res.data) ===
           JSON.stringify(mockRes),
-        );
-      })
-      .catch(err => {
-        chai.fail(0, 1, err.message);
-      });
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
     });
   });
 
@@ -54,12 +54,12 @@ describe('/roomsのテスト', () => {
         name: 'MyGroupChat',
         iconPreset: 'star',
         description: 'Here is my group chatroom.',
-      }).then(res => {
+      }).then((res) => {
         assert(
           JSON.stringify(res.data) ===
           JSON.stringify(mockRes),
         );
-      }).catch(err => {
+      }).catch((err) => {
         chai.fail(0, 1, err.message);
       });
     });

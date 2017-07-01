@@ -33,15 +33,15 @@ describe('/roomsのテスト', () => {
       mock.onGet('/rooms').reply(200, mockRes);
 
       return cw.listMyMessages()
-      .then(res => {
-        assert(
-          JSON.stringify(res.data) ===
+        .then((res) => {
+          assert(
+            JSON.stringify(res.data) ===
           JSON.stringify(mockRes),
-        );
-      })
-      .catch(err => {
-        chai.fail(0, 1, err.message);
-      });
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
     });
 
     it('/rooms/{{roomId}}', () => {
@@ -71,15 +71,15 @@ describe('/roomsのテスト', () => {
         .reply(200, mockRes);
 
       return cw.getRoomInfo(roomId)
-      .then(res => {
-        assert(
-          JSON.stringify(res.data) ===
+        .then((res) => {
+          assert(
+            JSON.stringify(res.data) ===
           JSON.stringify(mockRes),
-        );
-      })
-      .catch(err => {
-        chai.fail(0, 1, err.message);
-      });
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
     });
 
     it('/rooms/{{roomId}}/members', () => {
@@ -105,15 +105,15 @@ describe('/roomsのテスト', () => {
         .reply(200, mockRes);
 
       return cw.listRoomMembers(roomId)
-      .then(res => {
-        assert(
-          JSON.stringify(res.data) ===
+        .then((res) => {
+          assert(
+            JSON.stringify(res.data) ===
           JSON.stringify(mockRes),
-        );
-      })
-      .catch(err => {
-        chai.fail(0, 1, err.message);
-      });
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
     });
 
     it('/rooms/{{roomId}}/messages', () => {
@@ -140,15 +140,15 @@ describe('/roomsのテスト', () => {
         .reply(200, mockRes);
 
       return cw.listRoomMessages(roomId)
-      .then(res => {
-        assert(
-          JSON.stringify(res.data) ===
+        .then((res) => {
+          assert(
+            JSON.stringify(res.data) ===
           JSON.stringify(mockRes),
-        );
-      })
-      .catch(err => {
-        chai.fail(0, 1, err.message);
-      });
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
     });
 
     it('/rooms/{{roomId}}/messages/{{messageId}}', () => {
@@ -174,15 +174,15 @@ describe('/roomsのテスト', () => {
         .reply(200, mockRes);
 
       return cw.getMessageInfo(roomId, messageId)
-      .then(res => {
-        assert(
-          JSON.stringify(res.data) ===
+        .then((res) => {
+          assert(
+            JSON.stringify(res.data) ===
           JSON.stringify(mockRes),
-        );
-      })
-      .catch(err => {
-        chai.fail(0, 1, err.message);
-      });
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
     });
 
     it('/rooms/{{roomId}}/tasks', () => {
@@ -228,15 +228,15 @@ describe('/roomsのテスト', () => {
       mock.onGet(`/rooms/${roomId}/tasks`).reply(mockRes);
 
       return cw.listRoomTasks(roomId, accountId, assignedByAccountId, status)
-      .then(res => {
-        assert(
-          JSON.stringify(res.data) ===
+        .then((res) => {
+          assert(
+            JSON.stringify(res.data) ===
           JSON.stringify(mockRes(config)[1]),
-        );
-      })
-      .catch(err => {
-        chai.fail(0, 1, err.message);
-      });
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
     });
 
     it('/rooms/{{roomId}}/tasks/{{taskId}}', () => {
@@ -268,15 +268,15 @@ describe('/roomsのテスト', () => {
         .reply(200, mockRes);
 
       return cw.getTaskInfo(roomId, taskId)
-      .then(res => {
-        assert(
-          JSON.stringify(res.data) ===
+        .then((res) => {
+          assert(
+            JSON.stringify(res.data) ===
           JSON.stringify(mockRes),
-        );
-      })
-      .catch(err => {
-        chai.fail(0, 1, err.message);
-      });
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
     });
 
     it('/rooms/{{roomId}}/files', () => {
@@ -311,15 +311,15 @@ describe('/roomsのテスト', () => {
       mock.onGet(`/rooms/${roomId}/files`).reply(mockRes);
 
       return cw.listRoomFiles(roomId, accountId)
-      .then(res => {
-        assert(
-          JSON.stringify(res.data) ===
+        .then((res) => {
+          assert(
+            JSON.stringify(res.data) ===
           JSON.stringify(mockRes(config)[1]),
-        );
-      })
-      .catch(err => {
-        chai.fail(0, 1, err.message);
-      });
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
     });
 
     it('/rooms/{{roomId}}/files/{{fileId}}', () => {
@@ -363,7 +363,7 @@ describe('/roomsのテスト', () => {
       return Promise.all([
         cw.getFileInfo(roomId, fileId, 0),
         cw.getFileInfo(roomId, fileId, 1),
-      ]).then(resps => {
+      ]).then((resps) => {
         assert(
           JSON.stringify(resps[0].data) ===
           JSON.stringify(mockRes),
@@ -373,9 +373,9 @@ describe('/roomsのテスト', () => {
           JSON.stringify(mockResUrl),
         );
       })
-      .catch(reason => {
-        chai.fail(0, 1, reason);
-      });
+        .catch((reason) => {
+          chai.fail(0, 1, reason);
+        });
     });
   });
 });

@@ -29,7 +29,13 @@ export default class chatwork extends chatworkRo {
   /**
    * @return {Promise} Return response or error message.
    * @desc グループチャットを新規作成
-   * @param {number} requestId - リクエストID
+   * @param {Object} options - オプション引数
+   * @param {string} options.description - チャット概要
+   * @param {number[]} options.membersAdminIds - 管理者権限のユーザー
+   * @param {number[]} options.membersMemberIds - メンバー権限のユーザー
+   * @param {number[]} options.membersReadonlyIds - 閲覧のみ権限のユーザー
+   * @param {string} options.iconPreset - アイコン種類
+   * @param {string} options.name - グループチャット名
    */
   createChatroom(options) {
     return this.instance.post('/rooms',

@@ -36,4 +36,32 @@ describe('/roomsのテスト', () => {
       });
     });
   });
+
+  describe('PUT', () => {
+    it('/rooms/{{roomId}}', () => {
+      const cw = new Chatwork('apiKey');
+      const mock = new MockAdapter(cw.instance);
+      const roomId = 789;
+
+      const mockRes = {
+        room_id: roomId,
+      };
+
+      mock.onPut(`/rooms/${roomId}`)
+        .reply(200, mockRes);
+
+      return cw.updateChatroom(roomId, {
+        name: 'MyGroupChat',
+        iconPreset: 'star',
+        description: 'Here is my group chatroom.',
+      }).then(res => {
+        assert(
+          JSON.stringify(res.data) ===
+          JSON.stringify(mockRes),
+        );
+      }).catch(err => {
+        chai.fail(0, 1, err.message);
+      });
+    });
+  });
 });

@@ -44,5 +44,22 @@ export default class chatwork extends chatworkRo {
     );
   }
 
-
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc チャットの名前、アイコンをアップデート
+   * @param {number} roomId - チャットルームID
+   * @param {Object} options - オプション引数
+   * @param {string} options.description - グループチャットの概要説明テキスト
+   * @param {string} options.iconPreset - グループチャットのアイコン種類
+   * @param {string} options.name - グループチャットのチャット名
+   */
+  updateChatroom(roomId, options) {
+    return this.instance.put(`/rooms/${roomId}`,
+      qs.stringify({
+        description: options.description,
+        icon_preset: options.iconPreset,
+        name: options.name,
+      }),
+    );
+  }
 }

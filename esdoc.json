@@ -1,4 +1,9 @@
 {
   "source": "./src",
-  "destination": "./esdoc"
+  "destination": "./esdoc",
+  "package": "./package.json",
+  "index": "./README.md",
+  "manual": {
+    "index": "./README.md"
+  }
 }

@@ -23,14 +23,14 @@ describe('/myのテスト', () => {
       mock.onGet('/my/status').reply(200, mockRes);
 
       return cw.getMyStatus()
-      .then(res => {
-        assert(
-          JSON.stringify(res.data) === JSON.stringify(mockRes),
-        );
-      })
-      .catch(err => {
-        chai.fail(0, 1, err.message);
-      });
+        .then((res) => {
+          assert(
+            JSON.stringify(res.data) === JSON.stringify(mockRes),
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
     });
 
     it('/my/tasks', () => {
@@ -72,14 +72,14 @@ describe('/myのテスト', () => {
         config.params.assigned_by_account_id,
         config.params.status,
       )
-      .then(res => {
-        assert(
-          JSON.stringify(res.data) === JSON.stringify(mockRes(config)[1]),
-        );
-      })
-      .catch(err => {
-        chai.fail(0, 1, err.message);
-      });
+        .then((res) => {
+          assert(
+            JSON.stringify(res.data) === JSON.stringify(mockRes(config)[1]),
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
     });
   });
 });

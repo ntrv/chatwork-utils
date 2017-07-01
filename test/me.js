@@ -35,14 +35,14 @@ describe('/meのテスト', () => {
       mock.onGet('/me').reply(200, mockRes);
 
       return cw.me()
-      .then(res => {
-        assert(
-          JSON.stringify(res.data) === JSON.stringify(mockRes),
-        );
-      })
-      .catch(err => {
-        chai.fail(0, 1, err.message);
-      });
+        .then((res) => {
+          assert(
+            JSON.stringify(res.data) === JSON.stringify(mockRes),
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
     });
   });
 });

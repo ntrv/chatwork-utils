@@ -1,12 +1,21 @@
 env:
   node: true
   es6: true
+  mocha: true
+parser: babel-eslint
+parserOptions:
+  sourceType: module
+  allowImportExportEverywhere: false
+  ecmaFeature:
+    impliedStrict: true
 extends: airbnb-base
 plugins:
   - import
+  - mocha
 rules:
   no-param-reassign: 0
   no-console: 0
+  mocha/no-exclusive-tests: error
 settings:
   import/resolver:
     - node

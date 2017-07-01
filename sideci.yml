@@ -1,8 +1,9 @@
 ---
 linter:
   eslint:
+    npm_install: true
     options:
-      npm_install: false
       config: '.eslintrc.yml'
       ext: 'es6'
       ignore-path: .gitignore
+      ignore-pattern: '/lib/*'

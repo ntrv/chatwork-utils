@@ -28,14 +28,14 @@ describe('/incoming_requestsのテスト', () => {
       mock.onGet('/incoming_requests').reply(200, mockRes);
 
       return cw.listIncomingRequests()
-      .then(res => {
-        assert(
-          JSON.stringify(res.data) === JSON.stringify(mockRes),
-        );
-      })
-      .catch(err => {
-        chai.fail(0, 1, err.message);
-      });
+        .then((res) => {
+          assert(
+            JSON.stringify(res.data) === JSON.stringify(mockRes),
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
     });
   });
 
@@ -60,14 +60,14 @@ describe('/incoming_requestsのテスト', () => {
         .reply(200, mockRes);
 
       return cw.approveIncomingRequest(requestId)
-      .then(res => {
-        assert(
-          JSON.stringify(res.data) === JSON.stringify(mockRes),
-        );
-      })
-      .catch(err => {
-        chai.fail(0, 1, err.message);
-      });
+        .then((res) => {
+          assert(
+            JSON.stringify(res.data) === JSON.stringify(mockRes),
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
     });
   });
 
@@ -82,14 +82,14 @@ describe('/incoming_requestsのテスト', () => {
         .reply(expectedCode, {});
 
       return cw.rejectIncomingRequest(requestId)
-      .then(res => {
-        assert(
-          res.status === expectedCode,
-        );
-      })
-      .catch(err => {
-        chai.fail(0, 1, err.message);
-      });
+        .then((res) => {
+          assert(
+            res.status === expectedCode,
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
     });
   });
 });

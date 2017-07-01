@@ -5,13 +5,14 @@ import chatworkRo from './chatworkRo';
 /**
  * @access public
  * @desc For use Chatwork services
+ * @see http://developer.chatwork.com/ja/endpoints.html
  */
 export default class chatwork extends chatworkRo {
-
   /**
    * @return {Promise} Return response or error message.
    * @desc 自分に対するコンタクト承認依頼を承認する
    * @param {number} requestId - リクエストID
+   * @see http://developer.chatwork.com/ja/endpoint_incoming_requests.html#PUT-incoming_requests-request_id
    */
   approveIncomingRequest(requestId) {
     return this.instance.put(`/incoming_requests/${requestId}`);
@@ -21,6 +22,7 @@ export default class chatwork extends chatworkRo {
    * @return {Promise} Return response or error message.
    * @desc 自分に対するコンタクト承認依頼をキャンセルする
    * @param {number} requestId - リクエストID
+   * @see http://developer.chatwork.com/ja/endpoint_incoming_requests.html#DELETE-incoming_requests-request_id
    */
   rejectIncomingRequest(requestId) {
     return this.instance.delete(`/incoming_requests/${requestId}`);
@@ -29,7 +31,14 @@ export default class chatwork extends chatworkRo {
   /**
    * @return {Promise} Return response or error message.
    * @desc グループチャットを新規作成
-   * @param {number} requestId - リクエストID
+   * @param {Object} options - オプション引数
+   * @param {string} options.description - チャット概要
+   * @param {number[]} options.membersAdminIds - 管理者権限のユーザー
+   * @param {number[]} options.membersMemberIds - メンバー権限のユーザー
+   * @param {number[]} options.membersReadonlyIds - 閲覧のみ権限のユーザー
+   * @param {string} options.iconPreset - アイコン種類
+   * @param {string} options.name - グループチャット名
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#POST-rooms
    */
   createChatroom(options) {
     return this.instance.post('/rooms',
@@ -44,5 +53,23 @@ export default class chatwork extends chatworkRo {
     );
   }
 
-
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc チャットの名前、アイコンをアップデート
+   * @param {number} roomId - チャットルームID
+   * @param {Object} options - オプション引数
+   * @param {string} options.description - グループチャットの概要説明テキスト
+   * @param {string} options.iconPreset - グループチャットのアイコン種類
+   * @param {string} options.name - グループチャットのチャット名
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#PUT-rooms-room_id
+   */
+  updateChatroom(roomId, options) {
+    return this.instance.put(`/rooms/${roomId}`,
+      qs.stringify({
+        description: options.description,
+        icon_preset: options.iconPreset,
+        name: options.name,
+      }),
+    );
+  }
 }

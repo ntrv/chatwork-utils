@@ -12,11 +12,12 @@ export default class baseChatwork {
   /**
    * @desc Create Chatwork instance
    * @param {string} apikey - Chatwork API Token
+   * @see http://developer.chatwork.com/ja/endpoints.html
    */
   constructor(apikey) {
     /**
      * @desc Set config defaults when create the axios instance
-     * <https://github.com/mzabriskie/axios#instance-methods>
+     * @see https://github.com/mzabriskie/axios#instance-methods
      *
      * @type {Object}
      * @property {function(url: string, config: axios.requestConfig)} instance.get

@@ -100,4 +100,38 @@ export default class chatwork extends chatworkRo {
       }),
     );
   }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc チャットのメンバーを一括変更
+   * @param {Object} options - オプション引数
+   * @param {number[]} options.membersAdminIds - 管理者権限のユーザー
+   * @param {number[]} options.membersMemberIds - メンバー権限のユーザー
+   * @param {number[]} options.membersReadonlyIds - 閲覧のみ権限のユーザー
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#PUT-rooms-room_id-members
+   */
+  modifyChatroomMembers(roomId, options) {
+    return this.instance.put(`/rooms/${roomId}/members`,
+      qs.stringify({
+        members_admin_ids: _.join(options.membersAdminIds),
+        members_member_ids: _.join(options.membersMemberIds),
+        members_readonly_ids: _.join(options.membersReadonlyIds),
+      }),
+    );
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc チャットに新しいメッセージを追加
+   * @param {number} roomId - チャットルームID
+   * @param {string} body - メッセージ内容
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#POST-rooms-room_id-messages
+   */
+  postMessage(roomId, body) {
+    return this.instance.post(`/rooms/${roomId}/messages`,
+      qs.stringify({
+        body,
+      }),
+    );
+  }
 }

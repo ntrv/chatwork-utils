@@ -72,4 +72,32 @@ export default class chatwork extends chatworkRo {
       }),
     );
   }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc グループチャットを退席する
+   * @param {number} roomId - チャットルームID
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#DELETE-rooms-room_id
+   */
+  leaveChatroom(roomId) {
+    return this.instance.delete(`/rooms/${roomId}`,
+      qs.stringify({
+        action_type: 'leave',
+      }),
+    );
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc グループチャットを削除する
+   * @param {number} roomId - チャットルームID
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#DELETE-rooms-room_id
+   */
+  deleteChatroom(roomId) {
+    return this.instance.delete(`/rooms/${roomId}`,
+      qs.stringify({
+        action_type: 'delete',
+      }),
+    );
+  }
 }

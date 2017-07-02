@@ -64,4 +64,44 @@ describe('/roomsのテスト', () => {
       });
     });
   });
+
+  describe('DELETE', () => {
+    it('/rooms/{{roomId}}?action_type=leave', () => {
+      const cw = new Chatwork('apiKey');
+      const mock = new MockAdapter(cw.instance);
+      const roomId = 789;
+      const mockRes = {};
+
+      mock.onDelete(`/rooms/${roomId}`)
+        .reply(200, mockRes);
+
+      return cw.leaveChatroom(roomId).then((res) => {
+        assert(
+          JSON.stringify(res.data) ===
+          JSON.stringify(mockRes),
+        );
+      }).catch((err) => {
+        chai.fail(0, 1, err.message);
+      });
+    });
+
+    it('/rooms/{{roomId}}?action_type=delete', () => {
+      const cw = new Chatwork('apiKey');
+      const mock = new MockAdapter(cw.instance);
+      const roomId = 789;
+      const mockRes = {};
+
+      mock.onDelete(`/rooms/${roomId}`)
+        .reply(200, mockRes);
+
+      return cw.deleteChatroom(roomId).then((res) => {
+        assert(
+          JSON.stringify(res.data) ===
+          JSON.stringify(mockRes),
+        );
+      }).catch((err) => {
+        chai.fail(0, 1, err.message);
+      });
+    });
+  });
 });

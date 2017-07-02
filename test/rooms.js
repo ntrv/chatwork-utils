@@ -36,7 +36,7 @@ describe('/roomsのテスト', () => {
         .then((res) => {
           assert(
             JSON.stringify(res.data) ===
-          JSON.stringify(mockRes),
+            JSON.stringify(mockRes),
           );
         })
         .catch((err) => {
@@ -74,7 +74,7 @@ describe('/roomsのテスト', () => {
         .then((res) => {
           assert(
             JSON.stringify(res.data) ===
-          JSON.stringify(mockRes),
+            JSON.stringify(mockRes),
           );
         })
         .catch((err) => {
@@ -108,7 +108,7 @@ describe('/roomsのテスト', () => {
         .then((res) => {
           assert(
             JSON.stringify(res.data) ===
-          JSON.stringify(mockRes),
+            JSON.stringify(mockRes),
           );
         })
         .catch((err) => {
@@ -143,7 +143,7 @@ describe('/roomsのテスト', () => {
         .then((res) => {
           assert(
             JSON.stringify(res.data) ===
-          JSON.stringify(mockRes),
+            JSON.stringify(mockRes),
           );
         })
         .catch((err) => {
@@ -177,7 +177,7 @@ describe('/roomsのテスト', () => {
         .then((res) => {
           assert(
             JSON.stringify(res.data) ===
-          JSON.stringify(mockRes),
+            JSON.stringify(mockRes),
           );
         })
         .catch((err) => {
@@ -231,7 +231,7 @@ describe('/roomsのテスト', () => {
         .then((res) => {
           assert(
             JSON.stringify(res.data) ===
-          JSON.stringify(mockRes(config)[1]),
+            JSON.stringify(mockRes(config)[1]),
           );
         })
         .catch((err) => {
@@ -271,7 +271,7 @@ describe('/roomsのテスト', () => {
         .then((res) => {
           assert(
             JSON.stringify(res.data) ===
-          JSON.stringify(mockRes),
+            JSON.stringify(mockRes),
           );
         })
         .catch((err) => {
@@ -314,7 +314,7 @@ describe('/roomsのテスト', () => {
         .then((res) => {
           assert(
             JSON.stringify(res.data) ===
-          JSON.stringify(mockRes(config)[1]),
+            JSON.stringify(mockRes(config)[1]),
           );
         })
         .catch((err) => {

@@ -28,7 +28,64 @@ describe('/roomsのテスト', () => {
         .then((res) => {
           assert(
             JSON.stringify(res.data) ===
+            JSON.stringify(mockRes),
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
+    });
+
+    it('/rooms/{{roomId}}/messages', () => {
+      const cw = new Chatwork('apiKey');
+      const mock = new MockAdapter(cw.instance);
+      const roomId = 423;
+
+      const mockRes = {
+        message_id: '1234',
+      };
+
+      mock.onPost(`/rooms/${roomId}/messages`)
+        .reply(200, mockRes);
+
+      return cw.createMessageChatroom(roomId, `
+        Hello ChatWork!
+      `)
+        .then((res) => {
+          assert(
+            JSON.stringify(res.data) ===
           JSON.stringify(mockRes),
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
+    });
+
+    it('/rooms/{{roomId}}/tasks', () => {
+      const cw = new Chatwork('apiKey');
+      const mock = new MockAdapter(cw.instance);
+      const roomId = 357;
+
+      const mockRes = {
+        task_ids: [
+          123,
+          456,
+        ],
+      };
+
+      mock.onPost(`/rooms/${roomId}/tasks`)
+        .reply(200, mockRes);
+
+      return cw.createTaskChatroom(roomId, {
+        body: 'Buy Milk',
+        limit: 1385996399,
+        to_ids: [1, 3, 6],
+      })
+        .then((res) => {
+          assert(
+            JSON.stringify(res.data) ===
+            JSON.stringify(mockRes),
           );
         })
         .catch((err) => {
@@ -62,6 +119,52 @@ describe('/roomsのテスト', () => {
       }).catch((err) => {
         chai.fail(0, 1, err.message);
       });
+    });
+  });
+
+  describe('DELETE', () => {
+    it('/rooms/{{roomId}}?action_type=leave', () => {
+      const cw = new Chatwork('apiKey');
+      const mock = new MockAdapter(cw.instance);
+      const roomId = 1234;
+
+      const mockRes = {};
+
+      mock.onDelete(`/rooms/${roomId}`)
+        .reply(200, mockRes);
+
+      return cw.leaveChatroom(roomId)
+        .then((res) => {
+          assert(
+            JSON.stringify(res.data) ===
+            JSON.stringify(mockRes),
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
+    });
+
+    it('/rooms/{{roomId}}?action_type=delete', () => {
+      const cw = new Chatwork('apiKey');
+      const mock = new MockAdapter(cw.instance);
+      const roomId = 1234;
+
+      const mockRes = {};
+
+      mock.onDelete(`/rooms/${roomId}`)
+        .reply(200, mockRes);
+
+      return cw.deleteChatroom(roomId)
+        .then((res) => {
+          assert(
+            JSON.stringify(res.data) ===
+            JSON.stringify(mockRes),
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
     });
   });
 });

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import MockAdapter from 'axios-mock-adapter';
 import assert from 'assert';
 import Chai from 'chai';
@@ -119,6 +120,49 @@ describe('/roomsのテスト', () => {
       }).catch((err) => {
         chai.fail(0, 1, err.message);
       });
+    });
+
+    it('/rooms/{{roomId}}/members', () => {
+      const cw = new Chatwork('apiKey');
+      const mock = new MockAdapter(cw.instance);
+      const roomId = 2468;
+
+      const membersAdminIds = [123, 542, 1001];
+      const membersMemberIds = [21, 344];
+      const membersReadonlyIds = [15, 103];
+
+      const config = {
+        data: {
+          members_admin_ids: _.join(membersAdminIds),
+          members_member_ids: _.join(membersMemberIds),
+          members_readonly_ids: _.join(membersReadonlyIds),
+        },
+      };
+
+      const mockRes = cfg => [200, {
+        admin: _.split(cfg.members_admin_ids, ','),
+        member: _.split(cfg.members_member_ids, ','),
+        readonly: _.split(cfg.members_readonly_ids, ','),
+      }];
+
+      mock.onPut(`/rooms/${roomId}/members`)
+        .reply(mockRes);
+
+      return cw.modifyChatroomMembers(roomId, {
+        membersAdminIds,
+        membersMemberIds,
+        membersReadonlyIds,
+      })
+        .then((res) => {
+          console.log(res);
+          assert(
+            JSON.stringify(res.data) ===
+            JSON.stringify(mockRes(config)[1]),
+          );
+        })
+        .catch((err) => {
+          chai.fail(0, 1, err.message);
+        });
     });
   });
 

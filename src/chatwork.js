@@ -111,12 +111,10 @@ export default class chatwork extends chatworkRo {
    * @see http://developer.chatwork.com/ja/endpoint_rooms.html#PUT-rooms-room_id-members
    */
   modifyChatroomMembers(roomId, options) {
-    return this.instance.put(`/rooms/${roomId}`, {
-      data: {
-        members_admin_ids: _.join(options.membersAdminIds),
-        members_member_ids: _.join(options.membersMemberIds),
-        members_readonly_ids: _.join(options.membersReadonlyIds),
-      },
+    return this.instance.put(`/rooms/${roomId}/members`, {
+      members_admin_ids: _.join(options.membersAdminIds),
+      members_member_ids: _.join(options.membersMemberIds),
+      members_readonly_ids: _.join(options.membersReadonlyIds),
     });
   }
 

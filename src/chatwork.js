@@ -71,4 +71,87 @@ export default class chatwork extends chatworkRo {
       },
     });
   }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc グループチャットを退席する
+   * @param {number} roomId - チャットルームID
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#DELETE-rooms-room_id
+   */
+  leaveChatroom(roomId) {
+    return this.instance.delete(`/rooms/${roomId}`, {
+      data: {
+        action_type: 'leave',
+      },
+    });
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc グループチャットを削除する
+   * @param {number} roomId - チャットルームID
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#DELETE-rooms-room_id
+   */
+  deleteChatroom(roomId) {
+    return this.instance.delete(`/rooms/${roomId}`, {
+      data: {
+        action_type: 'delete',
+      },
+    });
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc チャットのメンバーを一括変更
+   * @param {number} roomId - チャットルームID
+   * @param {Object} options - オプション引数
+   * @param {number[]} options.membersAdminIds - 管理者権限のユーザー
+   * @param {number[]} options.membersMemberIds - メンバー権限のユーザー
+   * @param {number[]} options.membersReadonlyIds - 閲覧のみ権限のユーザー
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#PUT-rooms-room_id-members
+   */
+  modifyChatroomMembers(roomId, options) {
+    return this.instance.put(`/rooms/${roomId}`, {
+      data: {
+        members_admin_ids: _.join(options.membersAdminIds),
+        members_member_ids: _.join(options.membersMemberIds),
+        members_readonly_ids: _.join(options.membersReadonlyIds),
+      },
+    });
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc チャットに新しいメッセージを追加
+   * @param {number} roomId - チャットルームID
+   * @param {string} message - メッセージ本文
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#POST-rooms-room_id-messages
+   */
+  createMessageChatroom(roomId, message) {
+    return this.instance.post(`/rooms/${roomId}/messages`, {
+      data: {
+        body: message,
+      },
+    });
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc チャットに新しいタスクを追加
+   * @param {number} roomId - チャットルームID
+   * @param {Object} options - オプション引数
+   * @param {string} options.body - タスクの内容
+   * @param {number} options.limit - タスクの期限(Unix timeで入力してください)
+   * @param {number[]} options.toIds - 担当者のアカウントID
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#POST-rooms-room_id-messages
+   */
+  createTaskChatroom(roomId, options) {
+    return this.instance.post(`/rooms/${roomId}/tasks`, {
+      data: {
+        body: options.body,
+        limit: options.limit,
+        to_ids: _.join(options.toIds),
+      },
+    });
+  }
 }

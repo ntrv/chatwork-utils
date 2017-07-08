@@ -1,4 +1,3 @@
-import qs from 'qs';
 import _ from 'lodash';
 import chatworkRo from './chatworkRo';
 
@@ -41,16 +40,16 @@ export default class chatwork extends chatworkRo {
    * @see http://developer.chatwork.com/ja/endpoint_rooms.html#POST-rooms
    */
   createChatroom(options) {
-    return this.instance.post('/rooms',
-      qs.stringify({
+    return this.instance.post('/rooms', {
+      data: {
         description: options.description,
         members_admin_ids: _.join(options.membersAdminIds),
         members_member_ids: _.join(options.membersMemberIds),
         members_readonly_ids: _.join(options.membersReadonlyIds),
         icon_preset: options.iconPreset,
         name: options.name,
-      }),
-    );
+      },
+    });
   }
 
   /**
@@ -64,12 +63,12 @@ export default class chatwork extends chatworkRo {
    * @see http://developer.chatwork.com/ja/endpoint_rooms.html#PUT-rooms-room_id
    */
   updateChatroom(roomId, options) {
-    return this.instance.put(`/rooms/${roomId}`,
-      qs.stringify({
+    return this.instance.put(`/rooms/${roomId}`, {
+      data: {
         description: options.description,
         icon_preset: options.iconPreset,
         name: options.name,
-      }),
-    );
+      },
+    });
   }
 }

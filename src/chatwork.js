@@ -41,14 +41,12 @@ export default class chatwork extends chatworkRo {
    */
   createChatroom(options) {
     return this.instance.post('/rooms', {
-      data: {
-        description: options.description,
-        members_admin_ids: _.join(options.membersAdminIds),
-        members_member_ids: _.join(options.membersMemberIds),
-        members_readonly_ids: _.join(options.membersReadonlyIds),
-        icon_preset: options.iconPreset,
-        name: options.name,
-      },
+      description: options.description,
+      members_admin_ids: _.join(options.membersAdminIds),
+      members_member_ids: _.join(options.membersMemberIds),
+      members_readonly_ids: _.join(options.membersReadonlyIds),
+      icon_preset: options.iconPreset,
+      name: options.name,
     });
   }
 
@@ -64,11 +62,9 @@ export default class chatwork extends chatworkRo {
    */
   updateChatroom(roomId, options) {
     return this.instance.put(`/rooms/${roomId}`, {
-      data: {
-        description: options.description,
-        icon_preset: options.iconPreset,
-        name: options.name,
-      },
+      description: options.description,
+      icon_preset: options.iconPreset,
+      name: options.name,
     });
   }
 
@@ -127,9 +123,7 @@ export default class chatwork extends chatworkRo {
    */
   createMessageChatroom(roomId, message) {
     return this.instance.post(`/rooms/${roomId}/messages`, {
-      data: {
-        body: message,
-      },
+      body: message,
     });
   }
 
@@ -145,11 +139,9 @@ export default class chatwork extends chatworkRo {
    */
   createTaskChatroom(roomId, options) {
     return this.instance.post(`/rooms/${roomId}/tasks`, {
-      data: {
-        body: options.body,
-        limit: options.limit,
-        to_ids: _.join(options.toIds),
-      },
+      body: options.body,
+      limit: options.limit,
+      to_ids: _.join(options.toIds),
     });
   }
 }

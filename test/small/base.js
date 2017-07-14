@@ -1,6 +1,6 @@
 import chai from 'chai';
 import _ from 'lodash';
-import Chatwork from '../index';
+import Chatwork from '../../index';
 
 const assert = chai.assert;
 

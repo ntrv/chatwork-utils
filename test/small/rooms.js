@@ -2,7 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import _ from 'lodash';
 import assert from 'assert';
 import Chai from 'chai';
-import Chatwork from '../index';
+import Chatwork from '../../index';
 
 const chai = Chai.assert;
 

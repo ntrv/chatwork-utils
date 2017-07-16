@@ -39,3 +39,4 @@ jspm_packages
 # User definision
 lib/
 esdoc/
+.envrc

@@ -1,7 +1,7 @@
 import Chai from 'chai';
 import Chatwork from '../../index';
 
-const cw = new Chatwork(process.env.APIKEY);
+const cw = new Chatwork(process.env.CW_APIKEY);
 
 describe('Actual testing', () => {
   it('自分の未読数等を表示できる', () => cw.getMyStatus().catch((err) => {

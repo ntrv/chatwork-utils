@@ -1,0 +1,82 @@
+{
+  "name": "chatwork-utils",
+  "version": "0.6.1",
+  "description": "A chatwork API utils",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run babel && cross-env NODE_ENV=test nyc mocha",
+    "simple-test": "npm run babel && mocha test/small",
+    "cover": "nyc report --reporter=text-lcov > coverage.lcov && codecov | grep -v token",
+    "babel": "babel src -d lib --source-maps",
+    "lint": "eslint .",
+    "fix": "eslint . --fix",
+    "clean": "rm -rf lib coverage.lcov esdoc",
+    "clean-all": "npm clean && rm -rf node_modules",
+    "esdoc": "esdoc -c ./esdoc.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Nate-River56/chatwork-utils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Nate-River56/chatwork-utils/issues"
+  },
+  "engine": {
+    "node": ">=4.3"
+  },
+  "keywords": [
+    "chatwork"
+  ],
+  "author": {
+    "name": "Nate-River56",
+    "email": "hydrangea56@me.com",
+    "url": "https://github.com/Nate-River56"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/Nate-River56/hub2chat#readme",
+  "devDependencies": {
+    "axios-mock-adapter": "^1.8.1",
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-istanbul": "^4.1.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-power-assert": "^1.0.0",
+    "babel-register": "^6.24.1",
+    "chai": "^4.0.2",
+    "codecov": "^2.1.0",
+    "cross-env": "^5.0.1",
+    "esdoc": "^0.5.2",
+    "eslint": "^4.1.1",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-import-resolver-node": "^0.3.1",
+    "eslint-plugin-import": "^2.6.1",
+    "eslint-plugin-mocha": "^4.11.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "intelli-espower-loader": "^1.0.1",
+    "mocha": "^3.2.0",
+    "nyc": "^11.0.3",
+    "power-assert": "^1.4.2"
+  },
+  "dependencies": {
+    "axios": "^0.16.1",
+    "lodash": "^4.17.4"
+  },
+  "directories": {
+    "test": "test/"
+  },
+  "nyc": {
+    "require": [
+      "babel-register"
+    ],
+    "exclude": [
+      "index.js",
+      "test/*"
+    ],
+    "cache": true,
+    "per-file": true,
+    "check-coverage": true,
+    "sourceMap": false,
+    "instrument": false
+  }
+}

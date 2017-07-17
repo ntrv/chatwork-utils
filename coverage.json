@@ -1,0 +1,22 @@
+{
+  "coverage": "100%",
+  "expectCount": 28,
+  "actualCount": 28,
+  "files": {
+    "src/chatwork.js": {
+      "expectCount": 10,
+      "actualCount": 10,
+      "undocumentLines": []
+    },
+    "src/baseChatwork.js": {
+      "expectCount": 3,
+      "actualCount": 3,
+      "undocumentLines": []
+    },
+    "src/chatworkRo.js": {
+      "expectCount": 15,
+      "actualCount": 15,
+      "undocumentLines": []
+    }
+  }
+}

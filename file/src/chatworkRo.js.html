@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/chatworkRo.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/baseChatwork.js~baseChatwork.html">baseChatwork</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/chatwork.js~chatwork.html">chatwork</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/chatworkRo.js~chatworkRo.html">chatworkRo</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://github.com/mzabriskie/axios#request-config">axios.requestConfig</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/chatworkRo.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import baseChatwork from &apos;./baseChatwork&apos;;
+
+/**
+ * @access public
+ * @desc For use Chatwork Readonly services
+ * @see http://developer.chatwork.com/ja/endpoints.html
+ */
+export default class chatworkRo extends baseChatwork {
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x81EA;&#x5206;&#x81EA;&#x8EAB;&#x306E;&#x60C5;&#x5831;&#x3092;&#x53D6;&#x5F97;
+   * @example
+   * const cw = new Chatwork(apiKey);
+   * cw.me()
+   *   .then(res =&gt; {
+   *     console.log(res.data);
+   *     console.log(res.status);
+   *     console.log(res.statusText);
+   *     console.log(res.headers);
+   *     console.log(res.config);
+   *   })
+   *   .catch(err =&gt; {
+   *     if(err.response) {
+   *       console.log(err.response.data);
+   *       console.log(err.response.status);
+   *       console.log(err.response.headers);
+   *     } else if(err.request) {
+   *       console.log(err.request);
+   *     } else {
+   *       console.log(&apos;Error&apos;, err.message);
+   *     }
+   *     console.log(err.config);
+   *   });
+   * @see http://developer.chatwork.com/ja/endpoint_me.html#GET-me
+   */
+  me() {
+    return this.instance.get(&apos;/me&apos;);
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x81EA;&#x5206;&#x306E;&#x672A;&#x8AAD;&#x6570;&#x3001;&#x672A;&#x8AAD;To&#x6570;&#x3001;&#x672A;&#x5B8C;&#x4E86;&#x30BF;&#x30B9;&#x30AF;&#x6570;&#x3092;&#x8FD4;&#x3059;
+   * @see http://developer.chatwork.com/ja/endpoint_my.html#GET-my-status
+   */
+  getMyStatus() {
+    return this.instance.get(&apos;/my/status&apos;);
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x81EA;&#x5206;&#x306E;&#x30BF;&#x30B9;&#x30AF;&#x4E00;&#x89A7;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;&#x3002;(100&#x4EF6;&#x307E;&#x3067;&#x53D6;&#x5F97;&#x53EF;&#x80FD;)
+   * @param {number} assignedByAccountId - &#x30BF;&#x30B9;&#x30AF;&#x306E;&#x4F9D;&#x983C;&#x8005;&#x306E;&#x30A2;&#x30AB;&#x30A6;&#x30F3;&#x30C8;ID
+   * @param {string} [status = &apos;open&apos;] - &#x30BF;&#x30B9;&#x30AF;&#x306E;&#x30B9;&#x30C6;&#x30FC;&#x30BF;&#x30B9; &apos;open&apos; or &apos;done&apos;
+   * @see http://developer.chatwork.com/ja/endpoint_my.html#GET-my-tasks
+   */
+  listMyTasks(assignedByAccountId, status = &apos;open&apos;) {
+    return this.instance.get(&apos;/my/tasks&apos;, {
+      params: {
+        assigned_by_account_id: assignedByAccountId,
+        status,
+      },
+    });
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x81EA;&#x5206;&#x306E;&#x30B3;&#x30F3;&#x30BF;&#x30AF;&#x30C8;&#x4E00;&#x89A7;&#x3092;&#x53D6;&#x5F97;
+   * @see http://developer.chatwork.com/ja/endpoint_contacts.html#GET-contacts
+   */
+  listMyContacts() {
+    return this.instance.get(&apos;/contacts&apos;);
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x81EA;&#x5206;&#x306B;&#x5BFE;&#x3059;&#x308B;&#x30B3;&#x30F3;&#x30BF;&#x30AF;&#x30C8;&#x627F;&#x8A8D;&#x4F9D;&#x983C;&#x4E00;&#x89A7;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;(100&#x4EF6;&#x307E;&#x3067;&#x53D6;&#x5F97;&#x53EF;&#x80FD;)
+   * @see http://developer.chatwork.com/ja/endpoint_incoming_requests.html#GET-incoming_requests
+   */
+  listIncomingRequests() {
+    return this.instance.get(&apos;/incoming_requests&apos;);
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x81EA;&#x5206;&#x306E;&#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x4E00;&#x89A7;&#x306E;&#x53D6;&#x5F97;
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms
+   */
+  listMyMessages() {
+    return this.instance.get(&apos;/rooms&apos;);
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x306E;&#x540D;&#x524D;&#x3001;&#x30A2;&#x30A4;&#x30B3;&#x30F3;&#x3001;&#x7A2E;&#x985E;(my/direct/group)&#x3092;&#x53D6;&#x5F97;
+   * @param {number} roomId - &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x30EB;&#x30FC;&#x30E0;&#x306E;ID
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id
+   */
+  getRoomInfo(roomId) {
+    return this.instance.get(`/rooms/${roomId}`);
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x306E;&#x30E1;&#x30F3;&#x30D0;&#x30FC;&#x4E00;&#x89A7;&#x3092;&#x53D6;&#x5F97;
+   * @param {number} roomId - &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x30EB;&#x30FC;&#x30E0;&#x306E;ID
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-members
+   */
+  listRoomMembers(roomId) {
+    return this.instance.get(`/rooms/${roomId}/members`);
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x306E;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x4E00;&#x89A7;&#x3092;&#x53D6;&#x5F97;&#x3002;&#x30D1;&#x30E9;&#x30E1;&#x30FC;&#x30BF;&#x672A;&#x6307;&#x5B9A;&#x3060;&#x3068;&#x524D;&#x56DE;&#x53D6;&#x5F97;&#x5206;&#x304B;&#x3089;&#x306E;&#x5DEE;&#x5206;&#x306E;&#x307F;&#x3092;&#x8FD4;&#x3057;&#x307E;&#x3059;&#x3002;(&#x6700;&#x5927;100&#x4EF6;&#x307E;&#x3067;&#x53D6;&#x5F97;)
+   * @param {number} roomId - &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x30EB;&#x30FC;&#x30E0;&#x306E;ID
+   * @param {number} [isForce = 0] - 1&#x3092;&#x6307;&#x5B9A;&#x3059;&#x308B;&#x3068;&#x672A;&#x53D6;&#x5F97;&#x306B;&#x304B;&#x304B;&#x308F;&#x3089;&#x305A;&#x6700;&#x65B0;&#x306E;100&#x4EF6;&#x3092;&#x53D6;&#x5F97;&#x3057;&#x307E;&#x3059;
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-messages
+   */
+  listRoomMessages(roomId, isForce = 0) {
+    return this.instance.get(`/rooms/${roomId}/messages`, {
+      params: {
+        force: isForce,
+      },
+    });
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x60C5;&#x5831;&#x3092;&#x53D6;&#x5F97;
+   * @param {number} roomId - &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x30EB;&#x30FC;&#x30E0;&#x306E;ID
+   * @param {string} messageId - &#x53C2;&#x7167;&#x3059;&#x308B;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x306E;ID
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-messages-message_id
+   */
+  getMessageInfo(roomId, messageId) {
+    return this.instance.get(`/rooms/${roomId}/messages/${messageId}`);
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x306E;&#x30BF;&#x30B9;&#x30AF;&#x4E00;&#x89A7;&#x3092;&#x53D6;&#x5F97; (100&#x4EF6;&#x307E;&#x3067;&#x53D6;&#x5F97;&#x53EF;&#x80FD;)
+   * @param {number} roomId - &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x30EB;&#x30FC;&#x30E0;&#x306E;ID
+   * @param {number} accountId - &#x30BF;&#x30B9;&#x30AF;&#x306E;&#x62C5;&#x5F53;&#x8005;&#x306E;&#x30A2;&#x30AB;&#x30A6;&#x30F3;&#x30C8;ID
+   * @param {number} assignedByAccountId - &#x30BF;&#x30B9;&#x30AF;&#x306E;&#x4F9D;&#x983C;&#x8005;&#x306E;&#x30A2;&#x30AB;&#x30A6;&#x30F3;&#x30C8;ID
+   * @param {string} [status = &apos;open&apos;] - &#x30BF;&#x30B9;&#x30AF;&#x306E;&#x30B9;&#x30C6;&#x30FC;&#x30BF;&#x30B9; &apos;open&apos; or &apos;done&apos;
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-tasks
+   */
+  listRoomTasks(roomId, accountId, assignedByAccountId, status = &apos;open&apos;) {
+    return this.instance.get(`/rooms/${roomId}/tasks`, {
+      params: {
+        account_id: accountId,
+        assigned_by_account_id: assignedByAccountId,
+        status,
+      },
+    });
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x30BF;&#x30B9;&#x30AF;&#x60C5;&#x5831;&#x3092;&#x53D6;&#x5F97;
+   * @param {number} roomId - &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x30EB;&#x30FC;&#x30E0;&#x306E;ID
+   * @param {number} taskId - &#x53C2;&#x7167;&#x3059;&#x308B;&#x30BF;&#x30B9;&#x30AF;&#x306E;ID
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-tasks-task_id
+   */
+  getTaskInfo(roomId, taskId) {
+    return this.instance.get(`/rooms/${roomId}/tasks/${taskId}`);
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x306E;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x4E00;&#x89A7;&#x3092;&#x53D6;&#x5F97; (100&#x4EF6;&#x307E;&#x3067;&#x53D6;&#x5F97;&#x53EF;&#x80FD;)
+   * @param {number} roomId - &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x30EB;&#x30FC;&#x30E0;&#x306E;ID
+   * @param {number} accountId - &#x30A2;&#x30C3;&#x30D7;&#x30ED;&#x30FC;&#x30C9;&#x3057;&#x305F;&#x30E6;&#x30FC;&#x30B6;&#x30FC;&#x306E;&#x30A2;&#x30AB;&#x30A6;&#x30F3;&#x30C8;ID
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-files
+   */
+  listRoomFiles(roomId, accountId) {
+    return this.instance.get(`/rooms/${roomId}/files`, {
+      params: {
+        account_id: accountId,
+      },
+    });
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x60C5;&#x5831;&#x3092;&#x53D6;&#x5F97;
+   * @param {number} roomId - &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x30EB;&#x30FC;&#x30E0;&#x306E;ID
+   * @param {number} fileId - &#x53C2;&#x7167;&#x3059;&#x308B;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306E;ID
+   * @param {number} [isUrl = 0] - 1&#x306E;&#x3068;&#x304D;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x3059;&#x308B;&#x70BA;&#x306E;URL&#x3092;&#x751F;&#x6210;&#x3059;&#x308B;
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-files-file_id
+   */
+  getFileInfo(roomId, fileId, isUrl = 0) {
+    return this.instance.get(`/rooms/${roomId}/files/${fileId}`, {
+      params: {
+        create_download_url: isUrl,
+      },
+    });
+  }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

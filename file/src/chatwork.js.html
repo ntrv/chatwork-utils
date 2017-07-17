@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/chatwork.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/baseChatwork.js~baseChatwork.html">baseChatwork</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/chatwork.js~chatwork.html">chatwork</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/chatworkRo.js~chatworkRo.html">chatworkRo</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://github.com/mzabriskie/axios#request-config">axios.requestConfig</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/chatwork.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import _ from &apos;lodash&apos;;
+import chatworkRo from &apos;./chatworkRo&apos;;
+
+/**
+ * @access public
+ * @desc For use Chatwork services
+ * @see http://developer.chatwork.com/ja/endpoints.html
+ */
+export default class chatwork extends chatworkRo {
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x81EA;&#x5206;&#x306B;&#x5BFE;&#x3059;&#x308B;&#x30B3;&#x30F3;&#x30BF;&#x30AF;&#x30C8;&#x627F;&#x8A8D;&#x4F9D;&#x983C;&#x3092;&#x627F;&#x8A8D;&#x3059;&#x308B;
+   * @param {number} requestId - &#x30EA;&#x30AF;&#x30A8;&#x30B9;&#x30C8;ID
+   * @see http://developer.chatwork.com/ja/endpoint_incoming_requests.html#PUT-incoming_requests-request_id
+   */
+  approveIncomingRequest(requestId) {
+    return this.instance.put(`/incoming_requests/${requestId}`);
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x81EA;&#x5206;&#x306B;&#x5BFE;&#x3059;&#x308B;&#x30B3;&#x30F3;&#x30BF;&#x30AF;&#x30C8;&#x627F;&#x8A8D;&#x4F9D;&#x983C;&#x3092;&#x30AD;&#x30E3;&#x30F3;&#x30BB;&#x30EB;&#x3059;&#x308B;
+   * @param {number} requestId - &#x30EA;&#x30AF;&#x30A8;&#x30B9;&#x30C8;ID
+   * @see http://developer.chatwork.com/ja/endpoint_incoming_requests.html#DELETE-incoming_requests-request_id
+   */
+  rejectIncomingRequest(requestId) {
+    return this.instance.delete(`/incoming_requests/${requestId}`);
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x3092;&#x65B0;&#x898F;&#x4F5C;&#x6210;
+   * @param {Object} options - &#x30AA;&#x30D7;&#x30B7;&#x30E7;&#x30F3;&#x5F15;&#x6570;
+   * @param {string} options.description - &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x6982;&#x8981;
+   * @param {number[]} options.membersAdminIds - &#x7BA1;&#x7406;&#x8005;&#x6A29;&#x9650;&#x306E;&#x30E6;&#x30FC;&#x30B6;&#x30FC;
+   * @param {number[]} options.membersMemberIds - &#x30E1;&#x30F3;&#x30D0;&#x30FC;&#x6A29;&#x9650;&#x306E;&#x30E6;&#x30FC;&#x30B6;&#x30FC;
+   * @param {number[]} options.membersReadonlyIds - &#x95B2;&#x89A7;&#x306E;&#x307F;&#x6A29;&#x9650;&#x306E;&#x30E6;&#x30FC;&#x30B6;&#x30FC;
+   * @param {string} options.iconPreset - &#x30A2;&#x30A4;&#x30B3;&#x30F3;&#x7A2E;&#x985E;
+   * @param {string} options.name - &#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x540D;
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#POST-rooms
+   */
+  createChatroom(options) {
+    return this.instance.post(&apos;/rooms&apos;, {
+      description: options.description,
+      members_admin_ids: _.join(options.membersAdminIds),
+      members_member_ids: _.join(options.membersMemberIds),
+      members_readonly_ids: _.join(options.membersReadonlyIds),
+      icon_preset: options.iconPreset,
+      name: options.name,
+    });
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x306E;&#x540D;&#x524D;&#x3001;&#x30A2;&#x30A4;&#x30B3;&#x30F3;&#x3092;&#x30A2;&#x30C3;&#x30D7;&#x30C7;&#x30FC;&#x30C8;
+   * @param {number} roomId - &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x30EB;&#x30FC;&#x30E0;ID
+   * @param {Object} options - &#x30AA;&#x30D7;&#x30B7;&#x30E7;&#x30F3;&#x5F15;&#x6570;
+   * @param {string} options.description - &#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x306E;&#x6982;&#x8981;&#x8AAC;&#x660E;&#x30C6;&#x30AD;&#x30B9;&#x30C8;
+   * @param {string} options.iconPreset - &#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x306E;&#x30A2;&#x30A4;&#x30B3;&#x30F3;&#x7A2E;&#x985E;
+   * @param {string} options.name - &#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x306E;&#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x540D;
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#PUT-rooms-room_id
+   */
+  updateChatroom(roomId, options) {
+    return this.instance.put(`/rooms/${roomId}`, {
+      description: options.description,
+      icon_preset: options.iconPreset,
+      name: options.name,
+    });
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x3092;&#x9000;&#x5E2D;&#x3059;&#x308B;
+   * @param {number} roomId - &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x30EB;&#x30FC;&#x30E0;ID
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#DELETE-rooms-room_id
+   */
+  leaveChatroom(roomId) {
+    return this.instance.delete(`/rooms/${roomId}`, {
+      data: {
+        action_type: &apos;leave&apos;,
+      },
+    });
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x3092;&#x524A;&#x9664;&#x3059;&#x308B;
+   * @param {number} roomId - &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x30EB;&#x30FC;&#x30E0;ID
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#DELETE-rooms-room_id
+   */
+  deleteChatroom(roomId) {
+    return this.instance.delete(`/rooms/${roomId}`, {
+      data: {
+        action_type: &apos;delete&apos;,
+      },
+    });
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x306E;&#x30E1;&#x30F3;&#x30D0;&#x30FC;&#x3092;&#x4E00;&#x62EC;&#x5909;&#x66F4;
+   * @param {number} roomId - &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x30EB;&#x30FC;&#x30E0;ID
+   * @param {Object} options - &#x30AA;&#x30D7;&#x30B7;&#x30E7;&#x30F3;&#x5F15;&#x6570;
+   * @param {number[]} options.membersAdminIds - &#x7BA1;&#x7406;&#x8005;&#x6A29;&#x9650;&#x306E;&#x30E6;&#x30FC;&#x30B6;&#x30FC;
+   * @param {number[]} options.membersMemberIds - &#x30E1;&#x30F3;&#x30D0;&#x30FC;&#x6A29;&#x9650;&#x306E;&#x30E6;&#x30FC;&#x30B6;&#x30FC;
+   * @param {number[]} options.membersReadonlyIds - &#x95B2;&#x89A7;&#x306E;&#x307F;&#x6A29;&#x9650;&#x306E;&#x30E6;&#x30FC;&#x30B6;&#x30FC;
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#PUT-rooms-room_id-members
+   */
+  modifyChatroomMembers(roomId, options) {
+    return this.instance.put(`/rooms/${roomId}/members`, {
+      members_admin_ids: _.join(options.membersAdminIds),
+      members_member_ids: _.join(options.membersMemberIds),
+      members_readonly_ids: _.join(options.membersReadonlyIds),
+    });
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x306B;&#x65B0;&#x3057;&#x3044;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x3092;&#x8FFD;&#x52A0;
+   * @param {number} roomId - &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x30EB;&#x30FC;&#x30E0;ID
+   * @param {string} message - &#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x672C;&#x6587;
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#POST-rooms-room_id-messages
+   */
+  createMessageChatroom(roomId, message) {
+    return this.instance.post(`/rooms/${roomId}/messages`, {
+      body: message,
+    });
+  }
+
+  /**
+   * @return {Promise} Return response or error message.
+   * @desc &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x306B;&#x65B0;&#x3057;&#x3044;&#x30BF;&#x30B9;&#x30AF;&#x3092;&#x8FFD;&#x52A0;
+   * @param {number} roomId - &#x30C1;&#x30E3;&#x30C3;&#x30C8;&#x30EB;&#x30FC;&#x30E0;ID
+   * @param {Object} options - &#x30AA;&#x30D7;&#x30B7;&#x30E7;&#x30F3;&#x5F15;&#x6570;
+   * @param {string} options.body - &#x30BF;&#x30B9;&#x30AF;&#x306E;&#x5185;&#x5BB9;
+   * @param {number} options.limit - &#x30BF;&#x30B9;&#x30AF;&#x306E;&#x671F;&#x9650;(Unix time&#x3067;&#x5165;&#x529B;&#x3057;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;)
+   * @param {number[]} options.toIds - &#x62C5;&#x5F53;&#x8005;&#x306E;&#x30A2;&#x30AB;&#x30A6;&#x30F3;&#x30C8;ID
+   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#POST-rooms-room_id-messages
+   */
+  createTaskChatroom(roomId, options) {
+    return this.instance.post(`/rooms/${roomId}/tasks`, {
+      body: options.body,
+      limit: options.limit,
+      to_ids: _.join(options.toIds),
+    });
+  }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

@@ -1,0 +1,1931 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "name": "src/baseChatwork.js",
+    "content": "import axios from 'axios';\n\n/**\n * @external {axios.requestConfig} https://github.com/mzabriskie/axios#request-config\n */\n\n/**\n * @access protected\n * @desc Base Chatwork class only constructor\n */\nexport default class baseChatwork {\n  /**\n   * @desc Create Chatwork instance\n   * @param {string} apikey - Chatwork API Token\n   * @see http://developer.chatwork.com/ja/endpoints.html\n   */\n  constructor(apikey) {\n    /**\n     * @desc Set config defaults when create the axios instance\n     * @see https://github.com/mzabriskie/axios#instance-methods\n     *\n     * @type {Object}\n     * @property {function(url: string, config: axios.requestConfig)} instance.get\n     * @property {function(url: string, config: axios.requestConfig)} instance.post\n     * @property {function(url: string, config: axios.requestConfig)} instance.put\n     * @property {function(url: string, config: axios.requestConfig)} instance.delete\n     */\n    this.instance = axios.create({\n      baseURL: 'https://api.chatwork.com/v2/',\n      timeout: 2500,\n      headers: {\n        'X-ChatWorkToken': apikey,\n      },\n      validateStatus: status => status >= 200 && status < 300,\n      responseType: 'json',\n    });\n  }\n}\n",
+    "static": true,
+    "longname": "src/baseChatwork.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 1,
+    "kind": "external",
+    "name": "axios.requestConfig",
+    "externalLink": "https://github.com/mzabriskie/axios#request-config",
+    "memberof": "src/baseChatwork.js",
+    "static": true,
+    "longname": "src/baseChatwork.js~axios.requestConfig",
+    "access": null,
+    "description": ""
+  },
+  {
+    "__docId__": 2,
+    "kind": "class",
+    "name": "baseChatwork",
+    "memberof": "src/baseChatwork.js",
+    "static": true,
+    "longname": "src/baseChatwork.js~baseChatwork",
+    "access": "protected",
+    "export": true,
+    "importPath": "chatwork-utils/src/baseChatwork.js",
+    "importStyle": "baseChatwork",
+    "description": "Base Chatwork class only constructor",
+    "lineNumber": 11,
+    "interface": false
+  },
+  {
+    "__docId__": 3,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/baseChatwork.js~baseChatwork",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/baseChatwork.js~baseChatwork#constructor",
+    "access": null,
+    "description": "Create Chatwork instance",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoints.html"
+    ],
+    "lineNumber": 17,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "apikey",
+        "description": "Chatwork API Token"
+      }
+    ]
+  },
+  {
+    "__docId__": 4,
+    "kind": "member",
+    "name": "instance",
+    "memberof": "src/baseChatwork.js~baseChatwork",
+    "static": false,
+    "longname": "src/baseChatwork.js~baseChatwork#instance",
+    "access": null,
+    "description": "Set config defaults when create the axios instance",
+    "see": [
+      "https://github.com/mzabriskie/axios#instance-methods"
+    ],
+    "lineNumber": 28,
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "function(url: string, config: axios.requestConfig)"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "instance.get",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function(url: string, config: axios.requestConfig)"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "instance.post",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function(url: string, config: axios.requestConfig)"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "instance.put",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function(url: string, config: axios.requestConfig)"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "instance.delete",
+        "description": ""
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 5,
+    "kind": "file",
+    "name": "src/chatwork.js",
+    "content": "import _ from 'lodash';\nimport chatworkRo from './chatworkRo';\n\n/**\n * @access public\n * @desc For use Chatwork services\n * @see http://developer.chatwork.com/ja/endpoints.html\n */\nexport default class chatwork extends chatworkRo {\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc 自分に対するコンタクト承認依頼を承認する\n   * @param {number} requestId - リクエストID\n   * @see http://developer.chatwork.com/ja/endpoint_incoming_requests.html#PUT-incoming_requests-request_id\n   */\n  approveIncomingRequest(requestId) {\n    return this.instance.put(`/incoming_requests/${requestId}`);\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc 自分に対するコンタクト承認依頼をキャンセルする\n   * @param {number} requestId - リクエストID\n   * @see http://developer.chatwork.com/ja/endpoint_incoming_requests.html#DELETE-incoming_requests-request_id\n   */\n  rejectIncomingRequest(requestId) {\n    return this.instance.delete(`/incoming_requests/${requestId}`);\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc グループチャットを新規作成\n   * @param {Object} options - オプション引数\n   * @param {string} options.description - チャット概要\n   * @param {number[]} options.membersAdminIds - 管理者権限のユーザー\n   * @param {number[]} options.membersMemberIds - メンバー権限のユーザー\n   * @param {number[]} options.membersReadonlyIds - 閲覧のみ権限のユーザー\n   * @param {string} options.iconPreset - アイコン種類\n   * @param {string} options.name - グループチャット名\n   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#POST-rooms\n   */\n  createChatroom(options) {\n    return this.instance.post('/rooms', {\n      description: options.description,\n      members_admin_ids: _.join(options.membersAdminIds),\n      members_member_ids: _.join(options.membersMemberIds),\n      members_readonly_ids: _.join(options.membersReadonlyIds),\n      icon_preset: options.iconPreset,\n      name: options.name,\n    });\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc チャットの名前、アイコンをアップデート\n   * @param {number} roomId - チャットルームID\n   * @param {Object} options - オプション引数\n   * @param {string} options.description - グループチャットの概要説明テキスト\n   * @param {string} options.iconPreset - グループチャットのアイコン種類\n   * @param {string} options.name - グループチャットのチャット名\n   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#PUT-rooms-room_id\n   */\n  updateChatroom(roomId, options) {\n    return this.instance.put(`/rooms/${roomId}`, {\n      description: options.description,\n      icon_preset: options.iconPreset,\n      name: options.name,\n    });\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc グループチャットを退席する\n   * @param {number} roomId - チャットルームID\n   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#DELETE-rooms-room_id\n   */\n  leaveChatroom(roomId) {\n    return this.instance.delete(`/rooms/${roomId}`, {\n      data: {\n        action_type: 'leave',\n      },\n    });\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc グループチャットを削除する\n   * @param {number} roomId - チャットルームID\n   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#DELETE-rooms-room_id\n   */\n  deleteChatroom(roomId) {\n    return this.instance.delete(`/rooms/${roomId}`, {\n      data: {\n        action_type: 'delete',\n      },\n    });\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc チャットのメンバーを一括変更\n   * @param {number} roomId - チャットルームID\n   * @param {Object} options - オプション引数\n   * @param {number[]} options.membersAdminIds - 管理者権限のユーザー\n   * @param {number[]} options.membersMemberIds - メンバー権限のユーザー\n   * @param {number[]} options.membersReadonlyIds - 閲覧のみ権限のユーザー\n   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#PUT-rooms-room_id-members\n   */\n  modifyChatroomMembers(roomId, options) {\n    return this.instance.put(`/rooms/${roomId}/members`, {\n      members_admin_ids: _.join(options.membersAdminIds),\n      members_member_ids: _.join(options.membersMemberIds),\n      members_readonly_ids: _.join(options.membersReadonlyIds),\n    });\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc チャットに新しいメッセージを追加\n   * @param {number} roomId - チャットルームID\n   * @param {string} message - メッセージ本文\n   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#POST-rooms-room_id-messages\n   */\n  createMessageChatroom(roomId, message) {\n    return this.instance.post(`/rooms/${roomId}/messages`, {\n      body: message,\n    });\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc チャットに新しいタスクを追加\n   * @param {number} roomId - チャットルームID\n   * @param {Object} options - オプション引数\n   * @param {string} options.body - タスクの内容\n   * @param {number} options.limit - タスクの期限(Unix timeで入力してください)\n   * @param {number[]} options.toIds - 担当者のアカウントID\n   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#POST-rooms-room_id-messages\n   */\n  createTaskChatroom(roomId, options) {\n    return this.instance.post(`/rooms/${roomId}/tasks`, {\n      body: options.body,\n      limit: options.limit,\n      to_ids: _.join(options.toIds),\n    });\n  }\n}\n",
+    "static": true,
+    "longname": "src/chatwork.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 6,
+    "kind": "class",
+    "name": "chatwork",
+    "memberof": "src/chatwork.js",
+    "static": true,
+    "longname": "src/chatwork.js~chatwork",
+    "access": "public",
+    "export": true,
+    "importPath": "chatwork-utils/src/chatwork.js",
+    "importStyle": "chatwork",
+    "description": "For use Chatwork services",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoints.html"
+    ],
+    "lineNumber": 9,
+    "interface": false,
+    "extends": [
+      "src/chatworkRo.js~chatworkRo"
+    ]
+  },
+  {
+    "__docId__": 7,
+    "kind": "method",
+    "name": "approveIncomingRequest",
+    "memberof": "src/chatwork.js~chatwork",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatwork.js~chatwork#approveIncomingRequest",
+    "access": null,
+    "description": "自分に対するコンタクト承認依頼を承認する",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_incoming_requests.html#PUT-incoming_requests-request_id"
+    ],
+    "lineNumber": 16,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "requestId",
+        "description": "リクエストID"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 8,
+    "kind": "method",
+    "name": "rejectIncomingRequest",
+    "memberof": "src/chatwork.js~chatwork",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatwork.js~chatwork#rejectIncomingRequest",
+    "access": null,
+    "description": "自分に対するコンタクト承認依頼をキャンセルする",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_incoming_requests.html#DELETE-incoming_requests-request_id"
+    ],
+    "lineNumber": 26,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "requestId",
+        "description": "リクエストID"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 9,
+    "kind": "method",
+    "name": "createChatroom",
+    "memberof": "src/chatwork.js~chatwork",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatwork.js~chatwork#createChatroom",
+    "access": null,
+    "description": "グループチャットを新規作成",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_rooms.html#POST-rooms"
+    ],
+    "lineNumber": 42,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "オプション引数"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.description",
+        "description": "チャット概要"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.membersAdminIds",
+        "description": "管理者権限のユーザー"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.membersMemberIds",
+        "description": "メンバー権限のユーザー"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.membersReadonlyIds",
+        "description": "閲覧のみ権限のユーザー"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.iconPreset",
+        "description": "アイコン種類"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.name",
+        "description": "グループチャット名"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 10,
+    "kind": "method",
+    "name": "updateChatroom",
+    "memberof": "src/chatwork.js~chatwork",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatwork.js~chatwork#updateChatroom",
+    "access": null,
+    "description": "チャットの名前、アイコンをアップデート",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_rooms.html#PUT-rooms-room_id"
+    ],
+    "lineNumber": 63,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "roomId",
+        "description": "チャットルームID"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "オプション引数"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.description",
+        "description": "グループチャットの概要説明テキスト"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.iconPreset",
+        "description": "グループチャットのアイコン種類"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.name",
+        "description": "グループチャットのチャット名"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 11,
+    "kind": "method",
+    "name": "leaveChatroom",
+    "memberof": "src/chatwork.js~chatwork",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatwork.js~chatwork#leaveChatroom",
+    "access": null,
+    "description": "グループチャットを退席する",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_rooms.html#DELETE-rooms-room_id"
+    ],
+    "lineNumber": 77,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "roomId",
+        "description": "チャットルームID"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 12,
+    "kind": "method",
+    "name": "deleteChatroom",
+    "memberof": "src/chatwork.js~chatwork",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatwork.js~chatwork#deleteChatroom",
+    "access": null,
+    "description": "グループチャットを削除する",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_rooms.html#DELETE-rooms-room_id"
+    ],
+    "lineNumber": 91,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "roomId",
+        "description": "チャットルームID"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 13,
+    "kind": "method",
+    "name": "modifyChatroomMembers",
+    "memberof": "src/chatwork.js~chatwork",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatwork.js~chatwork#modifyChatroomMembers",
+    "access": null,
+    "description": "チャットのメンバーを一括変更",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_rooms.html#PUT-rooms-room_id-members"
+    ],
+    "lineNumber": 109,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "roomId",
+        "description": "チャットルームID"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "オプション引数"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.membersAdminIds",
+        "description": "管理者権限のユーザー"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.membersMemberIds",
+        "description": "メンバー権限のユーザー"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.membersReadonlyIds",
+        "description": "閲覧のみ権限のユーザー"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 14,
+    "kind": "method",
+    "name": "createMessageChatroom",
+    "memberof": "src/chatwork.js~chatwork",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatwork.js~chatwork#createMessageChatroom",
+    "access": null,
+    "description": "チャットに新しいメッセージを追加",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_rooms.html#POST-rooms-room_id-messages"
+    ],
+    "lineNumber": 124,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "roomId",
+        "description": "チャットルームID"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "message",
+        "description": "メッセージ本文"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 15,
+    "kind": "method",
+    "name": "createTaskChatroom",
+    "memberof": "src/chatwork.js~chatwork",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatwork.js~chatwork#createTaskChatroom",
+    "access": null,
+    "description": "チャットに新しいタスクを追加",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_rooms.html#POST-rooms-room_id-messages"
+    ],
+    "lineNumber": 140,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "roomId",
+        "description": "チャットルームID"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "オプション引数"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.body",
+        "description": "タスクの内容"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.limit",
+        "description": "タスクの期限(Unix timeで入力してください)"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.toIds",
+        "description": "担当者のアカウントID"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 16,
+    "kind": "file",
+    "name": "src/chatworkRo.js",
+    "content": "import baseChatwork from './baseChatwork';\n\n/**\n * @access public\n * @desc For use Chatwork Readonly services\n * @see http://developer.chatwork.com/ja/endpoints.html\n */\nexport default class chatworkRo extends baseChatwork {\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc 自分自身の情報を取得\n   * @example\n   * const cw = new Chatwork(apiKey);\n   * cw.me()\n   *   .then(res => {\n   *     console.log(res.data);\n   *     console.log(res.status);\n   *     console.log(res.statusText);\n   *     console.log(res.headers);\n   *     console.log(res.config);\n   *   })\n   *   .catch(err => {\n   *     if(err.response) {\n   *       console.log(err.response.data);\n   *       console.log(err.response.status);\n   *       console.log(err.response.headers);\n   *     } else if(err.request) {\n   *       console.log(err.request);\n   *     } else {\n   *       console.log('Error', err.message);\n   *     }\n   *     console.log(err.config);\n   *   });\n   * @see http://developer.chatwork.com/ja/endpoint_me.html#GET-me\n   */\n  me() {\n    return this.instance.get('/me');\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc 自分の未読数、未読To数、未完了タスク数を返す\n   * @see http://developer.chatwork.com/ja/endpoint_my.html#GET-my-status\n   */\n  getMyStatus() {\n    return this.instance.get('/my/status');\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc 自分のタスク一覧を取得する。(100件まで取得可能)\n   * @param {number} assignedByAccountId - タスクの依頼者のアカウントID\n   * @param {string} [status = 'open'] - タスクのステータス 'open' or 'done'\n   * @see http://developer.chatwork.com/ja/endpoint_my.html#GET-my-tasks\n   */\n  listMyTasks(assignedByAccountId, status = 'open') {\n    return this.instance.get('/my/tasks', {\n      params: {\n        assigned_by_account_id: assignedByAccountId,\n        status,\n      },\n    });\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc 自分のコンタクト一覧を取得\n   * @see http://developer.chatwork.com/ja/endpoint_contacts.html#GET-contacts\n   */\n  listMyContacts() {\n    return this.instance.get('/contacts');\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc 自分に対するコンタクト承認依頼一覧を取得する(100件まで取得可能)\n   * @see http://developer.chatwork.com/ja/endpoint_incoming_requests.html#GET-incoming_requests\n   */\n  listIncomingRequests() {\n    return this.instance.get('/incoming_requests');\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc 自分のチャット一覧の取得\n   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms\n   */\n  listMyMessages() {\n    return this.instance.get('/rooms');\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc チャットの名前、アイコン、種類(my/direct/group)を取得\n   * @param {number} roomId - チャットルームのID\n   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id\n   */\n  getRoomInfo(roomId) {\n    return this.instance.get(`/rooms/${roomId}`);\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc チャットのメンバー一覧を取得\n   * @param {number} roomId - チャットルームのID\n   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-members\n   */\n  listRoomMembers(roomId) {\n    return this.instance.get(`/rooms/${roomId}/members`);\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc チャットのメッセージ一覧を取得。パラメータ未指定だと前回取得分からの差分のみを返します。(最大100件まで取得)\n   * @param {number} roomId - チャットルームのID\n   * @param {number} [isForce = 0] - 1を指定すると未取得にかかわらず最新の100件を取得します\n   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-messages\n   */\n  listRoomMessages(roomId, isForce = 0) {\n    return this.instance.get(`/rooms/${roomId}/messages`, {\n      params: {\n        force: isForce,\n      },\n    });\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc メッセージ情報を取得\n   * @param {number} roomId - チャットルームのID\n   * @param {string} messageId - 参照するメッセージのID\n   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-messages-message_id\n   */\n  getMessageInfo(roomId, messageId) {\n    return this.instance.get(`/rooms/${roomId}/messages/${messageId}`);\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc チャットのタスク一覧を取得 (100件まで取得可能)\n   * @param {number} roomId - チャットルームのID\n   * @param {number} accountId - タスクの担当者のアカウントID\n   * @param {number} assignedByAccountId - タスクの依頼者のアカウントID\n   * @param {string} [status = 'open'] - タスクのステータス 'open' or 'done'\n   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-tasks\n   */\n  listRoomTasks(roomId, accountId, assignedByAccountId, status = 'open') {\n    return this.instance.get(`/rooms/${roomId}/tasks`, {\n      params: {\n        account_id: accountId,\n        assigned_by_account_id: assignedByAccountId,\n        status,\n      },\n    });\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc タスク情報を取得\n   * @param {number} roomId - チャットルームのID\n   * @param {number} taskId - 参照するタスクのID\n   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-tasks-task_id\n   */\n  getTaskInfo(roomId, taskId) {\n    return this.instance.get(`/rooms/${roomId}/tasks/${taskId}`);\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc チャットのファイル一覧を取得 (100件まで取得可能)\n   * @param {number} roomId - チャットルームのID\n   * @param {number} accountId - アップロードしたユーザーのアカウントID\n   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-files\n   */\n  listRoomFiles(roomId, accountId) {\n    return this.instance.get(`/rooms/${roomId}/files`, {\n      params: {\n        account_id: accountId,\n      },\n    });\n  }\n\n  /**\n   * @return {Promise} Return response or error message.\n   * @desc ファイル情報を取得\n   * @param {number} roomId - チャットルームのID\n   * @param {number} fileId - 参照するファイルのID\n   * @param {number} [isUrl = 0] - 1のときダウンロードする為のURLを生成する\n   * @see http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-files-file_id\n   */\n  getFileInfo(roomId, fileId, isUrl = 0) {\n    return this.instance.get(`/rooms/${roomId}/files/${fileId}`, {\n      params: {\n        create_download_url: isUrl,\n      },\n    });\n  }\n}\n",
+    "static": true,
+    "longname": "src/chatworkRo.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 17,
+    "kind": "class",
+    "name": "chatworkRo",
+    "memberof": "src/chatworkRo.js",
+    "static": true,
+    "longname": "src/chatworkRo.js~chatworkRo",
+    "access": "public",
+    "export": true,
+    "importPath": "chatwork-utils/src/chatworkRo.js",
+    "importStyle": "chatworkRo",
+    "description": "For use Chatwork Readonly services",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoints.html"
+    ],
+    "lineNumber": 8,
+    "interface": false,
+    "extends": [
+      "src/baseChatwork.js~baseChatwork"
+    ]
+  },
+  {
+    "__docId__": 18,
+    "kind": "method",
+    "name": "me",
+    "memberof": "src/chatworkRo.js~chatworkRo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatworkRo.js~chatworkRo#me",
+    "access": null,
+    "description": "自分自身の情報を取得",
+    "examples": [
+      "const cw = new Chatwork(apiKey);\ncw.me()\n  .then(res => {\n    console.log(res.data);\n    console.log(res.status);\n    console.log(res.statusText);\n    console.log(res.headers);\n    console.log(res.config);\n  })\n  .catch(err => {\n    if(err.response) {\n      console.log(err.response.data);\n      console.log(err.response.status);\n      console.log(err.response.headers);\n    } else if(err.request) {\n      console.log(err.request);\n    } else {\n      console.log('Error', err.message);\n    }\n    console.log(err.config);\n  });"
+    ],
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_me.html#GET-me"
+    ],
+    "lineNumber": 36,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 19,
+    "kind": "method",
+    "name": "getMyStatus",
+    "memberof": "src/chatworkRo.js~chatworkRo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatworkRo.js~chatworkRo#getMyStatus",
+    "access": null,
+    "description": "自分の未読数、未読To数、未完了タスク数を返す",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_my.html#GET-my-status"
+    ],
+    "lineNumber": 45,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 20,
+    "kind": "method",
+    "name": "listMyTasks",
+    "memberof": "src/chatworkRo.js~chatworkRo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatworkRo.js~chatworkRo#listMyTasks",
+    "access": null,
+    "description": "自分のタスク一覧を取得する。(100件まで取得可能)",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_my.html#GET-my-tasks"
+    ],
+    "lineNumber": 56,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "assignedByAccountId",
+        "description": "タスクの依頼者のアカウントID"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": " 'open'",
+        "defaultRaw": " 'open'",
+        "name": "status",
+        "description": "タスクのステータス 'open' or 'done'"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 21,
+    "kind": "method",
+    "name": "listMyContacts",
+    "memberof": "src/chatworkRo.js~chatworkRo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatworkRo.js~chatworkRo#listMyContacts",
+    "access": null,
+    "description": "自分のコンタクト一覧を取得",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_contacts.html#GET-contacts"
+    ],
+    "lineNumber": 70,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 22,
+    "kind": "method",
+    "name": "listIncomingRequests",
+    "memberof": "src/chatworkRo.js~chatworkRo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatworkRo.js~chatworkRo#listIncomingRequests",
+    "access": null,
+    "description": "自分に対するコンタクト承認依頼一覧を取得する(100件まで取得可能)",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_incoming_requests.html#GET-incoming_requests"
+    ],
+    "lineNumber": 79,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 23,
+    "kind": "method",
+    "name": "listMyMessages",
+    "memberof": "src/chatworkRo.js~chatworkRo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatworkRo.js~chatworkRo#listMyMessages",
+    "access": null,
+    "description": "自分のチャット一覧の取得",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms"
+    ],
+    "lineNumber": 88,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 24,
+    "kind": "method",
+    "name": "getRoomInfo",
+    "memberof": "src/chatworkRo.js~chatworkRo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatworkRo.js~chatworkRo#getRoomInfo",
+    "access": null,
+    "description": "チャットの名前、アイコン、種類(my/direct/group)を取得",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id"
+    ],
+    "lineNumber": 98,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "roomId",
+        "description": "チャットルームのID"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 25,
+    "kind": "method",
+    "name": "listRoomMembers",
+    "memberof": "src/chatworkRo.js~chatworkRo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatworkRo.js~chatworkRo#listRoomMembers",
+    "access": null,
+    "description": "チャットのメンバー一覧を取得",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-members"
+    ],
+    "lineNumber": 108,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "roomId",
+        "description": "チャットルームのID"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 26,
+    "kind": "method",
+    "name": "listRoomMessages",
+    "memberof": "src/chatworkRo.js~chatworkRo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatworkRo.js~chatworkRo#listRoomMessages",
+    "access": null,
+    "description": "チャットのメッセージ一覧を取得。パラメータ未指定だと前回取得分からの差分のみを返します。(最大100件まで取得)",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-messages"
+    ],
+    "lineNumber": 119,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "roomId",
+        "description": "チャットルームのID"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": " 0",
+        "defaultRaw": 0,
+        "name": "isForce",
+        "description": "1を指定すると未取得にかかわらず最新の100件を取得します"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 27,
+    "kind": "method",
+    "name": "getMessageInfo",
+    "memberof": "src/chatworkRo.js~chatworkRo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatworkRo.js~chatworkRo#getMessageInfo",
+    "access": null,
+    "description": "メッセージ情報を取得",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-messages-message_id"
+    ],
+    "lineNumber": 134,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "roomId",
+        "description": "チャットルームのID"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "messageId",
+        "description": "参照するメッセージのID"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 28,
+    "kind": "method",
+    "name": "listRoomTasks",
+    "memberof": "src/chatworkRo.js~chatworkRo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatworkRo.js~chatworkRo#listRoomTasks",
+    "access": null,
+    "description": "チャットのタスク一覧を取得 (100件まで取得可能)",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-tasks"
+    ],
+    "lineNumber": 147,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "roomId",
+        "description": "チャットルームのID"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "accountId",
+        "description": "タスクの担当者のアカウントID"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "assignedByAccountId",
+        "description": "タスクの依頼者のアカウントID"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": " 'open'",
+        "defaultRaw": " 'open'",
+        "name": "status",
+        "description": "タスクのステータス 'open' or 'done'"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 29,
+    "kind": "method",
+    "name": "getTaskInfo",
+    "memberof": "src/chatworkRo.js~chatworkRo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatworkRo.js~chatworkRo#getTaskInfo",
+    "access": null,
+    "description": "タスク情報を取得",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-tasks-task_id"
+    ],
+    "lineNumber": 164,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "roomId",
+        "description": "チャットルームのID"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "taskId",
+        "description": "参照するタスクのID"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 30,
+    "kind": "method",
+    "name": "listRoomFiles",
+    "memberof": "src/chatworkRo.js~chatworkRo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatworkRo.js~chatworkRo#listRoomFiles",
+    "access": null,
+    "description": "チャットのファイル一覧を取得 (100件まで取得可能)",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-files"
+    ],
+    "lineNumber": 175,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "roomId",
+        "description": "チャットルームのID"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "accountId",
+        "description": "アップロードしたユーザーのアカウントID"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 31,
+    "kind": "method",
+    "name": "getFileInfo",
+    "memberof": "src/chatworkRo.js~chatworkRo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/chatworkRo.js~chatworkRo#getFileInfo",
+    "access": null,
+    "description": "ファイル情報を取得",
+    "see": [
+      "http://developer.chatwork.com/ja/endpoint_rooms.html#GET-rooms-room_id-files-file_id"
+    ],
+    "lineNumber": 191,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "roomId",
+        "description": "チャットルームのID"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "fileId",
+        "description": "参照するファイルのID"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": " 0",
+        "defaultRaw": 0,
+        "name": "isUrl",
+        "description": "1のときダウンロードする為のURLを生成する"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "Return response or error message."
+    }
+  },
+  {
+    "__docId__": 33,
+    "kind": "external",
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 34,
+    "kind": "external",
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 35,
+    "kind": "external",
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 36,
+    "kind": "external",
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 37,
+    "kind": "external",
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 38,
+    "kind": "external",
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 39,
+    "kind": "external",
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 40,
+    "kind": "external",
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 41,
+    "kind": "external",
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 42,
+    "kind": "external",
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 43,
+    "kind": "external",
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 44,
+    "kind": "external",
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 45,
+    "kind": "external",
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 46,
+    "kind": "external",
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 47,
+    "kind": "external",
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 48,
+    "kind": "external",
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 49,
+    "kind": "external",
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 50,
+    "kind": "external",
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 51,
+    "kind": "external",
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 52,
+    "kind": "external",
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 53,
+    "kind": "external",
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 54,
+    "kind": "external",
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 55,
+    "kind": "external",
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 56,
+    "kind": "external",
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 57,
+    "kind": "external",
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 58,
+    "kind": "external",
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 59,
+    "kind": "external",
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 60,
+    "kind": "external",
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 61,
+    "kind": "external",
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 62,
+    "kind": "external",
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 63,
+    "kind": "external",
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 64,
+    "kind": "external",
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 65,
+    "kind": "external",
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 66,
+    "kind": "external",
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 67,
+    "kind": "external",
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 68,
+    "kind": "external",
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 69,
+    "kind": "external",
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 70,
+    "kind": "external",
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 71,
+    "kind": "external",
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 72,
+    "kind": "external",
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 73,
+    "kind": "external",
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 74,
+    "kind": "external",
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 75,
+    "kind": "external",
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 76,
+    "kind": "external",
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 77,
+    "kind": "external",
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 78,
+    "kind": "external",
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 79,
+    "kind": "external",
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
+    "access": null,
+    "description": "",
+    "lineNumber": 193,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 81,
+    "kind": "external",
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 82,
+    "kind": "external",
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 83,
+    "kind": "external",
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 84,
+    "kind": "external",
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 85,
+    "kind": "external",
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 86,
+    "kind": "external",
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 87,
+    "kind": "external",
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 88,
+    "kind": "external",
+    "name": "AudioContext",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~AudioContext",
+    "access": null,
+    "description": "",
+    "lineNumber": 34,
+    "builtinExternal": true
+  }
+]

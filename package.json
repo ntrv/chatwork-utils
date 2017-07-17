@@ -73,6 +73,9 @@
       "index.js",
       "test/*"
     ],
+    "cache": true,
+    "per-file": true,
+    "check-coverage": true,
     "sourceMap": false,
     "instrument": false
   }

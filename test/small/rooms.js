@@ -6,12 +6,12 @@ import Chatwork from '../../index';
 
 const chai = Chai.assert;
 
+const cw = new Chatwork('apiKey');
+const mock = new MockAdapter(cw.instance);
+
 describe('/roomsのテスト', () => {
   describe('GET', () => {
     it('/rooms', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
-
       const mockRes = [
         {
           room_id: 123,
@@ -36,7 +36,7 @@ describe('/roomsのテスト', () => {
         .then((res) => {
           assert(
             JSON.stringify(res.data) ===
-          JSON.stringify(mockRes),
+            JSON.stringify(mockRes),
           );
         })
         .catch((err) => {
@@ -45,11 +45,7 @@ describe('/roomsのテスト', () => {
     });
 
     it('/rooms/{{roomId}}', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
-
       const roomId = 456;
-
       const mockRes = {
         room_id: roomId,
         name: 'Group Chat Name',
@@ -74,7 +70,7 @@ describe('/roomsのテスト', () => {
         .then((res) => {
           assert(
             JSON.stringify(res.data) ===
-          JSON.stringify(mockRes),
+            JSON.stringify(mockRes),
           );
         })
         .catch((err) => {
@@ -83,11 +79,7 @@ describe('/roomsのテスト', () => {
     });
 
     it('/rooms/{{roomId}}/members', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
-
       const roomId = 123;
-
       const mockRes = [
         {
           account_id: 123,
@@ -108,7 +100,7 @@ describe('/roomsのテスト', () => {
         .then((res) => {
           assert(
             JSON.stringify(res.data) ===
-          JSON.stringify(mockRes),
+            JSON.stringify(mockRes),
           );
         })
         .catch((err) => {
@@ -117,11 +109,7 @@ describe('/roomsのテスト', () => {
     });
 
     it('/rooms/{{roomId}}/messages', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
-
       const roomId = '456';
-
       const mockRes = [
         {
           message_id: '5',
@@ -143,7 +131,7 @@ describe('/roomsのテスト', () => {
         .then((res) => {
           assert(
             JSON.stringify(res.data) ===
-          JSON.stringify(mockRes),
+            JSON.stringify(mockRes),
           );
         })
         .catch((err) => {
@@ -152,12 +140,8 @@ describe('/roomsのテスト', () => {
     });
 
     it('/rooms/{{roomId}}/messages/{{messageId}}', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
-
       const roomId = 456;
       const messageId = '5';
-
       const mockRes = {
         message_id: messageId,
         account: {
@@ -177,7 +161,7 @@ describe('/roomsのテスト', () => {
         .then((res) => {
           assert(
             JSON.stringify(res.data) ===
-          JSON.stringify(mockRes),
+            JSON.stringify(mockRes),
           );
         })
         .catch((err) => {
@@ -186,11 +170,7 @@ describe('/roomsのテスト', () => {
     });
 
     it('/rooms/{{roomId}}/tasks', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
-
       const roomId = 567;
-
       const config = {
         params: {
           account_id: 123,
@@ -231,7 +211,7 @@ describe('/roomsのテスト', () => {
         .then((res) => {
           assert(
             JSON.stringify(res.data) ===
-          JSON.stringify(mockRes(config)[1]),
+            JSON.stringify(mockRes(config)[1]),
           );
         })
         .catch((err) => {
@@ -240,12 +220,8 @@ describe('/roomsのテスト', () => {
     });
 
     it('/rooms/{{roomId}}/tasks/{{taskId}}', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
-
       const roomId = 123;
       const taskId = 3;
-
       const mockRes = {
         task_id: taskId,
         account: {
@@ -271,7 +247,7 @@ describe('/roomsのテスト', () => {
         .then((res) => {
           assert(
             JSON.stringify(res.data) ===
-          JSON.stringify(mockRes),
+            JSON.stringify(mockRes),
           );
         })
         .catch((err) => {
@@ -280,9 +256,6 @@ describe('/roomsのテスト', () => {
     });
 
     it('/rooms/{{roomId}}/files', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
-
       const roomId = 135;
       const config = {
         params: {
@@ -314,7 +287,7 @@ describe('/roomsのテスト', () => {
         .then((res) => {
           assert(
             JSON.stringify(res.data) ===
-          JSON.stringify(mockRes(config)[1]),
+            JSON.stringify(mockRes(config)[1]),
           );
         })
         .catch((err) => {
@@ -323,9 +296,6 @@ describe('/roomsのテスト', () => {
     });
 
     it('/rooms/{{roomId}}/files/{{fileId}}', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
-
       const roomId = 456;
       const fileId = 3;
 

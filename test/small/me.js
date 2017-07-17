@@ -5,12 +5,12 @@ import Chatwork from '../../index';
 
 const chai = Chai.assert;
 
+const cw = new Chatwork('apiKey');
+const mock = new MockAdapter(cw.instance);
+
 describe('/meのテスト', () => {
   describe('GET', () => {
     it('/me', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
-
       const mockRes = {
         account_id: 123,
         room_id: 322,

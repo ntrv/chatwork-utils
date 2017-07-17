@@ -5,12 +5,12 @@ import Chatwork from '../../index';
 
 const chai = Chai.assert;
 
+const cw = new Chatwork('apiKey');
+const mock = new MockAdapter(cw.instance);
+
 describe('/incoming_requestsのテスト', () => {
   describe('GET', () => {
     it('/incoming_requests', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
-
       const mockRes = [
         {
           request_id: 123,
@@ -41,10 +41,7 @@ describe('/incoming_requestsのテスト', () => {
 
   describe('PUT', () => {
     it('/incoming_requests/{{request_id}}', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
       const requestId = 12;
-
       const mockRes = {
         account_id: 363,
         room_id: 1234,
@@ -73,8 +70,6 @@ describe('/incoming_requestsのテスト', () => {
 
   describe('DELETE', () => {
     it('/incoming_requests/{{request_id}}', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
       const requestId = 12;
       const expectedCode = 200;
 

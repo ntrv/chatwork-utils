@@ -1,11 +1,11 @@
 {
   "name": "chatwork-utils",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "A chatwork API utils",
   "main": "index.js",
   "scripts": {
     "test": "npm run babel && cross-env NODE_ENV=test nyc mocha",
-    "simple-test": "npm run babel && mocha",
+    "simple-test": "npm run babel && mocha test/small",
     "cover": "nyc report --reporter=text-lcov > coverage.lcov && codecov | grep -v token",
     "babel": "babel src -d lib --source-maps",
     "lint": "eslint .",
@@ -73,6 +73,9 @@
       "index.js",
       "test/*"
     ],
+    "cache": true,
+    "per-file": true,
+    "check-coverage": true,
     "sourceMap": false,
     "instrument": false
   }

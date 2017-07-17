@@ -2,16 +2,16 @@ import _ from 'lodash';
 import MockAdapter from 'axios-mock-adapter';
 import assert from 'assert';
 import Chai from 'chai';
-import Chatwork from '../index';
+import Chatwork from '../../index';
 
 const chai = Chai.assert;
+
+const cw = new Chatwork('apiKey');
+const mock = new MockAdapter(cw.instance);
 
 describe('/roomsのテスト', () => {
   describe('POST', () => {
     it('/rooms', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
-
       const mockRes = {
         room_id: 1234,
       };
@@ -38,10 +38,7 @@ describe('/roomsのテスト', () => {
     });
 
     it('/rooms/{{roomId}}/messages', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
       const roomId = 423;
-
       const mockRes = {
         message_id: '1234',
       };
@@ -55,7 +52,7 @@ describe('/roomsのテスト', () => {
         .then((res) => {
           assert(
             JSON.stringify(res.data) ===
-          JSON.stringify(mockRes),
+            JSON.stringify(mockRes),
           );
         })
         .catch((err) => {
@@ -64,10 +61,7 @@ describe('/roomsのテスト', () => {
     });
 
     it('/rooms/{{roomId}}/tasks', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
       const roomId = 357;
-
       const mockRes = {
         task_ids: [
           123,
@@ -97,10 +91,7 @@ describe('/roomsのテスト', () => {
 
   describe('PUT', () => {
     it('/rooms/{{roomId}}', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
       const roomId = 789;
-
       const mockRes = {
         room_id: roomId,
       };
@@ -123,8 +114,6 @@ describe('/roomsのテスト', () => {
     });
 
     it('/rooms/{{roomId}}/members', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
       const roomId = 2468;
 
       const membersAdminIds = [123, 542, 1001];
@@ -167,10 +156,7 @@ describe('/roomsのテスト', () => {
 
   describe('DELETE', () => {
     it('/rooms/{{roomId}}?action_type=leave', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
       const roomId = 1234;
-
       const mockRes = {};
 
       mock.onDelete(`/rooms/${roomId}`)
@@ -189,10 +175,7 @@ describe('/roomsのテスト', () => {
     });
 
     it('/rooms/{{roomId}}?action_type=delete', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
       const roomId = 1234;
-
       const mockRes = {};
 
       mock.onDelete(`/rooms/${roomId}`)

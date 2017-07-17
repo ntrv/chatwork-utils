@@ -27,7 +27,7 @@ export default class baseChatwork {
      */
     this.instance = axios.create({
       baseURL: 'https://api.chatwork.com/v2/',
-      timeout: 1000,
+      timeout: 2500,
       headers: {
         'X-ChatWorkToken': apikey,
       },

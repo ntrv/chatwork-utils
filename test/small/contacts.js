@@ -1,16 +1,16 @@
 import MockAdapter from 'axios-mock-adapter';
 import assert from 'assert';
 import Chai from 'chai';
-import Chatwork from '../index';
+import Chatwork from '../../index';
 
 const chai = Chai.assert;
+
+const cw = new Chatwork('apiKey');
+const mock = new MockAdapter(cw.instance);
 
 describe('/contactsのテスト', () => {
   describe('GET', () => {
     it('/contacts', () => {
-      const cw = new Chatwork('apiKey');
-      const mock = new MockAdapter(cw.instance);
-
       const mockRes = [
         {
           account_id: 123,

@@ -1,6 +1,6 @@
 chatwork-utils
 ===
-[![Build Status](https://travis-ci.org/Nate-River56/chatwork-utils.svg?branch=master)](https://travis-ci.org/Nate-River56/chatwork-utils)
+[![Build Status](https://travis-ci.org/ntrv/chatwork-utils.svg?branch=master)](https://travis-ci.org/ntrv/chatwork-utils)
 [![Build status](https://ci.appveyor.com/api/projects/status/b11cjdqn3ci0oktj/branch/master?svg=true)](https://ci.appveyor.com/project/Nate-River56/chatwork-utils/branch/master)
 [![npm](https://img.shields.io/npm/v/chatwork-utils.svg)](https://www.npmjs.com/package/chatwork-utils)
 [![npm](https://img.shields.io/npm/l/chatwork-utils.svg)](https://www.npmjs.com/package/chatwork-utils)
@@ -10,4 +10,5 @@ chatwork-utils
 [![Dependency Status](https://www.versioneye.com/user/projects/58fce02cc2ef4238147e693d/badge.svg)](https://www.versioneye.com/user/projects/58fce02cc2ef4238147e693d)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2FNate-River56%2Fchatwork-utils.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2FNate-River56%2Fchatwork-utils?ref=badge_shield)
 [![codebeat badge](https://codebeat.co/badges/a8ef7366-519a-450e-adcd-380e197376ca)](https://codebeat.co/projects/github-com-nate-river56-chatwork-utils-master)
-[![Document Coverage](https://nate-river56.github.io/chatwork-utils/badge.svg)](https://nate-river56.github.io/chatwork-utils/)
+[![Document Coverage](https://ntrv.github.io/chatwork-utils/badge.svg)](https://ntrv.github.io/chatwork-utils/)
+[![Known Vulnerabilities](https://snyk.io/test/github/ntrv/chatwork-utils/badge.svg)](https://snyk.io/test/github/ntrv/chatwork-utils)

@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "axios": "^0.18.1",
-    "lodash": "^4.17.12"
+    "lodash": "^4.17.20"
   },
   "directories": {
     "test": "test/"
